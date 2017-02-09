@@ -41,7 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\INOL3Configuration.cs" />
+    <Compile Include="Nol3RegistryReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nol3.Communication.Models\Nol3.Communication.Models.csproj">
+      <Project>{045F13BC-72E6-423F-8696-C21F8A09BEE8}</Project>
+      <Name>Nol3.Communication.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
