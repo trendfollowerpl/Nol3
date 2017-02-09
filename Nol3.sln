@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication", "Nol3.Communication\Nol3.Communication.csproj", "{F789D1C0-8838-47CC-A583-68277334D520}"
+	ProjectSection(ProjectDependencies) = postProject
+		{045F13BC-72E6-423F-8696-C21F8A09BEE8} = {045F13BC-72E6-423F-8696-C21F8A09BEE8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Unit.Tests", "Nol3.Communication.Unit.Tests\Nol3.Communication.Unit.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 	ProjectSection(ProjectDependencies) = postProject
