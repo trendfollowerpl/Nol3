@@ -8,11 +8,11 @@ using Nol3.Communication;
 
 namespace Nol3.Communication.Unit.Tests
 {
+	[Category("Registry Communication")]
 	[TestFixture]
 	public class Nol3RegistryReaderTests
 	{
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 ionstallation returns bool")]
 		public void IsNolInstalled()
 		{
@@ -24,7 +24,6 @@ namespace Nol3.Communication.Unit.Tests
 			Assert.That(actualValue, Is.TypeOf(typeof(bool)));
 		}
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 is installed")]
 		public void IsNolpathIsInRegistry()
 		{
@@ -35,10 +34,7 @@ namespace Nol3.Communication.Unit.Tests
 			//assert
 			Assert.That(isInstalled);
 		}
-		//NOL3RegistrySetting
-
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_SynchPort()
 		{
@@ -50,7 +46,6 @@ namespace Nol3.Communication.Unit.Tests
 			Assert.That(settings.SynchPort,Is.Not.Null);
 		}
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_ASynchPort()
 		{
@@ -62,7 +57,6 @@ namespace Nol3.Communication.Unit.Tests
 			Assert.That(settings.AsynchPort, Is.Not.Null);
 		}
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_IsAsynchPortActive()
 		{
@@ -74,7 +68,6 @@ namespace Nol3.Communication.Unit.Tests
 			Assert.That(settings.IsAsynchPortActive, Is.Not.Null);
 		}
 		[Test]
-		[Category("Registry Communication")]
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_IsSynchPortActive()
 		{
