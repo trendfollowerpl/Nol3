@@ -36,9 +36,9 @@ namespace Nol3.Communication
 		#region private
 		private const string registryPath = @"HKEY_CURRENT_USER\\Software\\COMARCH S.A.\\NOL3\\7\\Settings";
 
-		private int ReadRegistry(string valueName)
+		private int? ReadRegistry(string valueName)
 		{
-			return (int)Registry.GetValue(registryPath, valueName, null);
+			return (int?)Registry.GetValue(registryPath, valueName, string.Empty);
 		}
 		#endregion
 	}
