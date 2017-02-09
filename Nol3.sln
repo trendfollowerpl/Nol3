@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Unit.Tes
 		{F789D1C0-8838-47CC-A583-68277334D520} = {F789D1C0-8838-47CC-A583-68277334D520}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Models", "Nol3.Communication.Models\Nol3.Communication.Models.csproj", "{045F13BC-72E6-423F-8696-C21F8A09BEE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
