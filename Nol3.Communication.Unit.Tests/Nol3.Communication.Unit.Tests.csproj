@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=3.0.5813.39031, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -48,6 +49,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nol3.Communication.Models\Nol3.Communication.Models.csproj">
+      <Project>{045f13bc-72e6-423f-8696-c21f8a09bee8}</Project>
+      <Name>Nol3.Communication.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nol3.Communication\Nol3.Communication.csproj">
       <Project>{f789d1c0-8838-47cc-a583-68277334d520}</Project>
       <Name>Nol3.Communication</Name>

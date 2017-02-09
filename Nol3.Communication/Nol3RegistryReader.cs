@@ -15,7 +15,7 @@ namespace Nol3.Communication
 		{
 			get
 			{
-				return ReadRegistry(string.Empty) == null ? false : true;
+				return ReadRegistry(Nol3RegistryKeys.SynchPort) == null ? false : true;
 			}
 		}
 
@@ -34,11 +34,13 @@ namespace Nol3.Communication
 		}
 
 		#region private
-		private const string registryPath = @"HKEY_CURRENT_USER\\Software\\COMARCH S.A.\\NOL3\\7\\Settings";
+		private const string registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings";
 
 		private int? ReadRegistry(string valueName)
 		{
-			return (int?)Registry.GetValue(registryPath, valueName, string.Empty);
+			int result;
+			if (int.TryParse((string)Registry.GetValue(registryPath, valueName, string.Empty), out result)) return result;
+			return null;
 		}
 		#endregion
 	}

@@ -8,9 +8,6 @@ namespace Nol3.Communication.Models
 {
 	public sealed class NOL3RegistrySetting
 	{
-		private int? _synchPort;
-		private int? _asynchPort;
-
 		public int? SynchPort { get; set; }
 		public int? AsynchPort { get; set; }
 
