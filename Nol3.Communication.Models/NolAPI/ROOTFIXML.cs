@@ -13,7 +13,6 @@ namespace Nol3.Communication.Models.NolAPI
 		private string _v;
 		private string _r;
 		private string _s;
-		public static RequestType methodName;
 
 		public ROOTFIXML()
 		{
