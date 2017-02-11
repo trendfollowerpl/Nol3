@@ -13,14 +13,14 @@ namespace Nol3.Communication
 {
 	public static class FIXML
 	{
-		public static string GenerateUserRequest(int requestType, int requestId)
+		public static string GenerateRequest<T>(T requestObject, int requestId) where T: new()
 		{
-			ROOTFIXML<TestClass> request = new ROOTFIXML<TestClass> { };
+			ROOTFIXML<T> request = new ROOTFIXML<T> { };
 			StringWriter stringWriter = new StringWriter();
 			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
-
-			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<TestClass>));//, overrides);
+			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>));//, overrides);
 			XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
+
 			xmlns.Add("", "");
 
 			using (xmlWriter)
@@ -30,5 +30,22 @@ namespace Nol3.Communication
 
 			return stringWriter.ToString();
 		}
+		//public static string GenerateUserRequest(int requestType, int requestId)
+		//{
+		//	ROOTFIXML<TestClass> request = new ROOTFIXML<TestClass> { };
+		//	StringWriter stringWriter = new StringWriter();
+		//	XmlWriter xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
+
+		//	XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<TestClass>));//, overrides);
+		//	XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
+		//	xmlns.Add("", "");
+
+		//	using (xmlWriter)
+		//	{
+		//		ser.Serialize(xmlWriter, request, xmlns);
+		//	}
+
+		//	return stringWriter.ToString();
+		//}
 	}
 }
