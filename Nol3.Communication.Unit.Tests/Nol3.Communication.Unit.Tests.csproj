@@ -44,6 +44,8 @@
     <Compile Include="Tests\Nol3RegistryReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test Data\FIXMTestData.cs" />
+    <Compile Include="Tests\ToolsTests\ConfigurationManagerTests.cs" />
+    <Compile Include="Tests\ToolsTests\IdGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -55,6 +57,10 @@
     <ProjectReference Include="..\Nol3.Communication.Models\Nol3.Communication.Models.csproj">
       <Project>{045f13bc-72e6-423f-8696-c21f8a09bee8}</Project>
       <Name>Nol3.Communication.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nol3.Communication.Tools\Nol3.Communication.Tools.csproj">
+      <Project>{213642bc-c49d-4129-9a0f-91c945805fd0}</Project>
+      <Name>Nol3.Communication.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nol3.Communication\Nol3.Communication.csproj">
       <Project>{f789d1c0-8838-47cc-a583-68277334d520}</Project>
