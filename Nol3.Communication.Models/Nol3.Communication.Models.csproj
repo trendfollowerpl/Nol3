@@ -44,6 +44,7 @@
     <Compile Include="NOL3RegistrySetting.cs" />
     <Compile Include="NolAPI\RequestType.cs" />
     <Compile Include="NolAPI\ROOTFIXML.cs" />
+    <Compile Include="NolAPI\UserRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
