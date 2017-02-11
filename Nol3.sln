@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Unit.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Models", "Nol3.Communication.Models\Nol3.Communication.Models.csproj", "{045F13BC-72E6-423F-8696-C21F8A09BEE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.Tools", "Nol3.Communication.Tools\Nol3.Communication.Tools.csproj", "{213642BC-C49D-4129-9A0F-91C945805FD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{045F13BC-72E6-423F-8696-C21F8A09BEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213642BC-C49D-4129-9A0F-91C945805FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213642BC-C49D-4129-9A0F-91C945805FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213642BC-C49D-4129-9A0F-91C945805FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213642BC-C49D-4129-9A0F-91C945805FD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
