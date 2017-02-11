@@ -20,11 +20,9 @@ namespace Nol3.Communication.Tools
 			}
 		}
 
-		public static void StoreIDinConfig()
+		public static void Reset()
 		{
-			var appSettings = ConfigurationManager.AppSettings;
-			appSettings["requestID"] = Convert.ToString(_id);
+			_id = 0;
 		}
-
 	}
 }
