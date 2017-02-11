@@ -6,18 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication.Models.NolAPI;
 using System.Xml.Serialization;
+using Nol3.Communication.Unit.Tests.Test_Data;
 
 namespace Nol3.Communication.Unit.Tests
 {
-	public class TestClass
-	{
-		[XmlAttribute]
-		public string TEST { get; set; } = "Testowy_attr";
-	}
-	public class EmptyTestClass
-	{		
-	}
-
 	[TestFixture]
 	public class FIXMLTests
 	{

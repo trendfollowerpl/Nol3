@@ -40,9 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FIXMLTests.cs" />
-    <Compile Include="Nol3RegistryReaderTests.cs" />
+    <Compile Include="Tests\FIXMLTests.cs" />
+    <Compile Include="Tests\Nol3RegistryReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test Data\FIXMTestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
