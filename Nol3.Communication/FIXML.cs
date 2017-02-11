@@ -13,7 +13,7 @@ namespace Nol3.Communication
 {
 	public static class FIXML
 	{
-		public static string GenerateRequest<T>(T requestObject, int requestId) where T: new()
+		public static string GenerateRequest<T>(T requestObject, int requestId) where T : new()
 		{
 			ROOTFIXML<T> request = new ROOTFIXML<T> { };
 			StringWriter stringWriter = new StringWriter();
@@ -23,12 +23,16 @@ namespace Nol3.Communication
 
 			xmlns.Add("", "");
 
+			string result = string.Empty;
+
+			using (stringWriter)
 			using (xmlWriter)
 			{
 				ser.Serialize(xmlWriter, request, xmlns);
+				result = stringWriter.ToString();
 			}
 
-			return stringWriter.ToString();
+			return result;
 		}
 		//public static string GenerateUserRequest(int requestType, int requestId)
 		//{
