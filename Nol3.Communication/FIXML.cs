@@ -13,9 +13,9 @@ namespace Nol3.Communication
 {
 	public static class FIXML
 	{
-		public static string GenerateRequest<T>(T requestObject, int requestId) where T : new()
+		public static string GenerateRequest<T>(T requestObject) where T : new()
 		{
-			ROOTFIXML<T> request = new ROOTFIXML<T> { };
+			ROOTFIXML<T> request = new ROOTFIXML<T>(requestObject);
 			StringWriter stringWriter = new StringWriter();
 			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
 			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>));//, overrides);
