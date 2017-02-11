@@ -11,20 +11,21 @@ using Nol3.Communication.Tools.Model;
 namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 {
 	[TestFixture]
-	public class ConfigurationManagerTests
+	public class Nol3ConfigurationManagerTests
 	{
 		[Test]
 		public void TestIfConfigurationIsSaved()
 		{
-			var currentConfig = new Configuration() { ID = 10 };
+			var currentConfig = new Nol3Configuration() { ID = 10 };
+			Nol3ConfigurationManager.SaveConfiguration(currentConfig);
 
-			FileAssert.Exists("Nol3.Communication.config");
+			Assert.That(Nol3ConfigurationManager.ConfigurationPath, Does.Exist);
 		}
 		[Test]
 		public void TestIfConfigurationCanBeRead()
 		{
-			ConfigurationManager.SaveConfiguration(new Configuration { ID = 100 });
-			var currentConfig = ConfigurationManager.GetConfiguration();
+			Nol3ConfigurationManager.SaveConfiguration(new Nol3Configuration { ID = 100 });
+			var currentConfig = Nol3ConfigurationManager.GetConfiguration();
 
 			Assert.That(currentConfig.ID,Is.EqualTo(100));
 		}

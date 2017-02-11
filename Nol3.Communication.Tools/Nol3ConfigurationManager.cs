@@ -10,34 +10,34 @@ using System.IO;
 
 namespace Nol3.Communication.Tools
 {
-	public static class ConfigurationManager
+	public static class Nol3ConfigurationManager
 	{
 		private static XmlDocument _configFile;
 		private const string Nol3CommunicationConfigFileName = "Nol3.Communication.config";
 
-		private static string ConfigurationPath
+		public static string ConfigurationPath
 		{
 			get
 			{
 				return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Nol3CommunicationConfigFileName);
 			}
 		}
-		public static Configuration GetConfiguration()
+		public static Nol3Configuration GetConfiguration()
 		{
-			Configuration config;
+			Nol3Configuration config;
 
-			XmlSerializer xs = new XmlSerializer(typeof(Configuration));
+			XmlSerializer xs = new XmlSerializer(typeof(Nol3Configuration));
 			
 			using (Stream file = File.OpenRead(ConfigurationPath))
 			{
-				config = xs.Deserialize(file) as Configuration;
+				config = xs.Deserialize(file) as Nol3Configuration;
 			}
 			
 			return config;
 		}
-		public static void SaveConfiguration(Configuration currentConfiguration)
+		public static void SaveConfiguration(Nol3Configuration currentConfiguration)
 		{
-			XmlSerializer xs = new XmlSerializer(typeof(Configuration));
+			XmlSerializer xs = new XmlSerializer(typeof(Nol3Configuration));
 			using (Stream file = File.Create(ConfigurationPath))
 			{
 				xs.Serialize(file, currentConfiguration);
