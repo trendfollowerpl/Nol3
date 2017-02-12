@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nol3.Communication.Models.NolAPI;
+using Nol3.Communication.Models.NolAPI.Requests;
 using System.Xml.Serialization;
 using Nol3.Communication.Unit.Tests.Test_Data;
 using Nol3.Communication.Tools;
@@ -16,7 +16,7 @@ namespace Nol3.Communication.Unit.Tests
 	public class FIXMLTests
 	{
 		[Test]
-		public void GenerateRequest_TESTData()
+		public void GenerateRequest_Generic_TESTData()
 		{
 			string result = FIXML.GenerateRequest<TestClass>(new TestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq TEST=""Testowy_attr"" /></FIXML>";
@@ -29,7 +29,7 @@ namespace Nol3.Communication.Unit.Tests
 			Assert.That(result,Is.EqualTo(expected));
 		}
 		[Test]
-		public void GenerateRequest_EmptyData()
+		public void GenerateRequest_Generic_EmptyData()
 		{
 			string result = FIXML.GenerateRequest<EmptyTestClass>(new EmptyTestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq /></FIXML>";
@@ -45,7 +45,7 @@ namespace Nol3.Communication.Unit.Tests
 		public void GenerateRequest_UserRequest()
 		{
 			IdGenerator.Reset();
-			string result = FIXML.GenerateRequest(new UserRequest()
+			string result = FIXML.GenerateUserRequest(new UserRequest()
 			{
 				Password="BOS",
 				Username="BOS",
