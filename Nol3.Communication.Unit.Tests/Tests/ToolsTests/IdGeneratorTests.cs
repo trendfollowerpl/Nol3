@@ -15,20 +15,20 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		[TestCase(99)]
 		public void ReturnsIncreasingBy1Values(int counter)
 		{
-			int currentID = 0;
+			string currentID=string.Empty;
 			IdGenerator.Reset();
 			for (int i = 0; i < counter; i++)
 			{
 				currentID = IdGenerator.ID;
 			}
 
-			Assert.That<int>(currentID, Is.EqualTo(counter));
+			Assert.That<string>(currentID, Is.EqualTo(Convert.ToString(counter)));
 		}
 
 		[Test]
 		public void GeneratedIDsAreUniqueWithinOneSession()
 		{
-			IList<int> ids = new List<int>();
+			var ids = new List<string>();
 			for (int i = 0; i < 100; i++)
 			{
 				ids.Add(IdGenerator.ID);
