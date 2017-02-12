@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Nol3.Communication.Models.NolAPI;
 using System.Xml.Serialization;
 using Nol3.Communication.Unit.Tests.Test_Data;
+using Nol3.Communication.Tools;
+using Nol3.Communication.Models;
 
 namespace Nol3.Communication.Unit.Tests
 {
@@ -16,7 +18,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_TESTData()
 		{
-			string result = FIXML.GenerateRequest<TestClass>(new TestClass(), 1);
+			string result = FIXML.GenerateRequest<TestClass>(new TestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq TEST=""Testowy_attr"" /></FIXML>";
 			var sb = new StringBuilder();
 
@@ -29,8 +31,28 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_EmptyData()
 		{
-			string result = FIXML.GenerateRequest<EmptyTestClass>(new EmptyTestClass(), 1);
+			string result = FIXML.GenerateRequest<EmptyTestClass>(new EmptyTestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq /></FIXML>";
+			var sb = new StringBuilder();
+
+			sb.AppendLine(String.Format("RESULT     : {0}", result));
+			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
+
+			TestContext.WriteLine(sb.ToString());
+			Assert.That(result, Is.EqualTo(expected));
+		}
+		[Test]
+		public void GenerateRequest_UserRequest()
+		{
+			IdGenerator.Reset();
+			string result = FIXML.GenerateRequest(new UserRequest()
+			{
+				Password="BOS",
+				Username="BOS",
+				UserRequestID= Convert.ToString(IdGenerator.ID),
+				UserRequestType=UserReqTyp.Login
+			});
+			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""1"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>";
 			var sb = new StringBuilder();
 
 			sb.AppendLine(String.Format("RESULT     : {0}", result));

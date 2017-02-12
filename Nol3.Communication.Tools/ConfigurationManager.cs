@@ -12,7 +12,6 @@ namespace Nol3.Communication.Tools
 {
 	public static class ConfigurationManager
 	{
-		private static XmlDocument _configFile;
 		private const string Nol3CommunicationConfigFileName = "Nol3.Communication.config";
 
 		private static string ConfigurationPath

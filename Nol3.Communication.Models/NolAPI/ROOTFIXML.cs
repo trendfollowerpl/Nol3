@@ -13,10 +13,10 @@ namespace Nol3.Communication.Models.NolAPI
 		private string _v;
 		private string _r;
 		private string _s;
-
-		public ROOTFIXML()
+		public ROOTFIXML() { }
+		public ROOTFIXML(T requestObject)
 		{
-			this.UserReq = new T();
+			this.UserReq = requestObject;
 			v = "5.0";
 			r = "20080317";
 			s = "20080314";
