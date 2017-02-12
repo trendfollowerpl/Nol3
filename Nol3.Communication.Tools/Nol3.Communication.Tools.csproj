@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="Nol3ConfigurationManager.cs" />
     <Compile Include="IdGenerator.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
