@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nol3.Communication.Models.NolAPI
+namespace Nol3.Communication.Models.NolAPI.Requests
 {
 	public struct UserReqTyp
 	{
