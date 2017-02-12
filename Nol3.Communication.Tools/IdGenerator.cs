@@ -11,12 +11,12 @@ namespace Nol3.Communication.Tools
 	{
 		private static int _id;
 
-		public static int ID
+		public static string ID
 		{
 			get
 			{
 				_id++;
-				return _id;
+				return Convert.ToString(_id);
 			}
 		}
 

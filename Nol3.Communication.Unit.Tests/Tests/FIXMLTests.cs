@@ -49,7 +49,7 @@ namespace Nol3.Communication.Unit.Tests
 			{
 				Password="BOS",
 				Username="BOS",
-				UserRequestID= Convert.ToString(IdGenerator.ID),
+				UserRequestID= IdGenerator.ID,
 				UserRequestType=UserReqTyp.Login
 			});
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""1"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>";
