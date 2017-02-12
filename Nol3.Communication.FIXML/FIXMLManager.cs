@@ -9,9 +9,9 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Nol3.Communication
+namespace Nol3.Communication.FIXML
 {
-	public static class FIXML
+	public static class FIXMLManager
 	{
 		public static string GenerateRequest<T>(T requestObject) where T : new()
 		{

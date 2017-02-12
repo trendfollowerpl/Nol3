@@ -8,7 +8,8 @@ using Nol3.Communication.Models.NolAPI.Requests;
 using System.Xml.Serialization;
 using Nol3.Communication.Unit.Tests.Test_Data;
 using Nol3.Communication.Tools;
-using Nol3.Communication.Models;
+using Nol3.Communication;
+using Nol3.Communication.FIXML;
 
 namespace Nol3.Communication.Unit.Tests
 {
@@ -18,7 +19,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_Generic_TESTData()
 		{
-			string result = FIXML.GenerateRequest<TestClass>(new TestClass());
+			string result = FIXMLManager.GenerateRequest<TestClass>(new TestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq TEST=""Testowy_attr"" /></FIXML>";
 			var sb = new StringBuilder();
 
@@ -31,7 +32,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_Generic_EmptyData()
 		{
-			string result = FIXML.GenerateRequest<EmptyTestClass>(new EmptyTestClass());
+			string result = FIXMLManager.GenerateRequest<EmptyTestClass>(new EmptyTestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq /></FIXML>";
 			var sb = new StringBuilder();
 
@@ -45,7 +46,7 @@ namespace Nol3.Communication.Unit.Tests
 		public void GenerateRequest_UserRequest()
 		{
 			IdGenerator.Reset();
-			string result = FIXML.GenerateUserRequest(new UserRequest()
+			string result = FIXMLManager.GenerateUserRequest(new UserRequest()
 			{
 				Password="BOS",
 				Username="BOS",
