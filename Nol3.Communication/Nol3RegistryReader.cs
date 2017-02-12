@@ -9,7 +9,7 @@ using Microsoft.Win32;
 
 namespace Nol3.Communication
 {
-	public class Nol3RegistryReader : INOL3Configuration
+	public class Nol3RegistryReader : INOL3RegistryConfiguration
 	{
 		public bool IsNol3Installed
 		{
