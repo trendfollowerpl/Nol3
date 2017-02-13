@@ -14,7 +14,7 @@ namespace Nol3.Communication
 		private Socket _client;
 		private NOL3RegistrySetting _settings;
 
-		public Nol3Connector(NOL3RegistrySetting settings)
+		private Nol3Connector(NOL3RegistrySetting settings)
 		{
 			_settings = settings;
 			_client = null;
