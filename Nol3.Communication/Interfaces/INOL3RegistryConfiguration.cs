@@ -8,7 +8,7 @@ using Nol3.Communication.Models;
 
 namespace Nol3.Communication.Interfaces
 {
-	public interface INOL3Configuration
+	public interface INOL3RegistryConfiguration
 	{
 		bool IsNol3Installed { get; }
 		NOL3RegistrySetting Settings { get; }
