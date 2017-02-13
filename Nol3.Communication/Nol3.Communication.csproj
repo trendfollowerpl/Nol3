@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\INOL3RegistryConfiguration.cs" />
+    <Compile Include="Nol3Connector.cs" />
     <Compile Include="Nol3RegistryReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
