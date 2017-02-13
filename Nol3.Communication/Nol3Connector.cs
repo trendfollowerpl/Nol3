@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Nol3.Communication
 {
-	public class Nol3Connector
+	public class Nol3Connector : IDisposable
 	{
 		private static Nol3Connector _Nol3ConnectorInstance = null;
 		private Socket _client;
@@ -17,9 +17,16 @@ namespace Nol3.Communication
 		private Nol3Connector(NOL3RegistrySetting settings)
 		{
 			_settings = settings;
-			_client = null;
+			_client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		}
 
+		public bool IsConnected
+		{
+			get
+			{
+				return _client.Connected;
+			}
+		}
 		public static Nol3Connector CreateClient(NOL3RegistrySetting settings)
 		{
 			_Nol3ConnectorInstance = _Nol3ConnectorInstance != null
@@ -27,6 +34,20 @@ namespace Nol3.Communication
 				: new Nol3Connector(settings);
 
 			return _Nol3ConnectorInstance;
+		}
+
+		public void Connect()
+		{
+			_client.Connect("localhost", (int)_settings.SynchPort);
+		}
+		public void CloseConnecion()
+		{
+			_client.Close();
+		}
+
+		public void Dispose()
+		{
+			_client.Dispose();
 		}
 	}
 }
