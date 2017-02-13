@@ -38,7 +38,7 @@ namespace Nol3.Communication
 
 		public void Connect()
 		{
-			_client.Connect("http://localhost/", (int)_settings.SynchPort);
+			_client.Connect("localhost", (int)_settings.SynchPort);
 		}
 		public void CloseConnecion()
 		{
