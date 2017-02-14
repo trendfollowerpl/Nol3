@@ -16,8 +16,7 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		[Test]
 		public void TestIfConfigurationIsSaved()
 		{
-			var currentConfig = new Nol3Configuration() { ID = 10 };
-			Nol3ConfigurationManager.SaveConfiguration(currentConfig);
+			Nol3ConfigurationManager.SaveConfiguration(new Nol3Configuration { ID = 10 });
 
 			Assert.That(Nol3ConfigurationManager.ConfigurationPath, Does.Exist);
 		}
@@ -27,7 +26,26 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 			Nol3ConfigurationManager.SaveConfiguration(new Nol3Configuration { ID = 100 });
 			var currentConfig = Nol3ConfigurationManager.GetConfiguration();
 
-			Assert.That(currentConfig.ID,Is.EqualTo(100));
+			Assert.That(currentConfig.ID, Is.EqualTo(100));
+			Assert.That(currentConfig.registryPath, Is.EqualTo(@"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings"));
+		}
+		[Test]
+		public void TestIfConfigurationPropertyCanBeChanged_Path()
+		{
+			Nol3ConfigurationManager.SaveConfiguration(new Nol3Configuration {
+				ID = 100,
+				registryPath = "TEST"
+			});
+			var currentConfig = Nol3ConfigurationManager.GetConfiguration();
+
+			//Restore to propper data
+			Nol3ConfigurationManager.SaveConfiguration(new Nol3Configuration
+			{
+				ID = 100,
+				registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings"
+			});
+
+			Assert.That(currentConfig.registryPath, Is.EqualTo(@"TEST"));
 		}
 
 	}

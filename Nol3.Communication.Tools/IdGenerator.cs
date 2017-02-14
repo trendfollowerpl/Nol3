@@ -19,6 +19,13 @@ namespace Nol3.Communication.Tools
 				return Convert.ToString(_id);
 			}
 		}
+		public static string CurrentID
+		{
+			get
+			{
+				return Convert.ToString(_id);
+			}
+		}
 
 		public static void Reset()
 		{

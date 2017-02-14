@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication;
 using Nol3.Communication.Models;
+using Nol3.Communication.Tools;
 using Microsoft.Win32;
 
 namespace Nol3.Communication
@@ -34,7 +35,14 @@ namespace Nol3.Communication
 		}
 
 		#region private
-		private const string registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings";
+
+		private static string registryPath
+		{
+			get
+			{
+				return Nol3ConfigurationManager.GetConfiguration().registryPath;
+			}
+		}
 
 		private static int? ReadRegistry(string valueName)
 		{
