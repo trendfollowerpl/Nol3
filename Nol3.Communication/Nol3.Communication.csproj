@@ -52,6 +52,10 @@
       <Project>{045F13BC-72E6-423F-8696-C21F8A09BEE8}</Project>
       <Name>Nol3.Communication.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Nol3.Communication.Tools\Nol3.Communication.Tools.csproj">
+      <Project>{213642bc-c49d-4129-9a0f-91c945805fd0}</Project>
+      <Name>Nol3.Communication.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
