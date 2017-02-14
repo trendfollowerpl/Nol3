@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NOL3RegistrySetting.cs" />
+    <Compile Include="NolAPI\Responses\BusinessMessageReject.cs" />
+    <Compile Include="NolAPI\Structures\BusinessRejectReason.cs" />
+    <Compile Include="NolAPI\Structures\RefMsgType.cs" />
     <Compile Include="NolAPI\Structures\RequestType.cs" />
     <Compile Include="NolAPI\Requests\ROOTFIXML.cs" />
     <Compile Include="NolAPI\Requests\UserRequest.cs" />

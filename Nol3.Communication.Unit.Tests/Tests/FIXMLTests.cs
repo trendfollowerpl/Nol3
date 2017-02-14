@@ -65,8 +65,6 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_UserResponse()
 		{
-			IdGenerator.Reset();
-
 			string result = FIXMLManager.GenerateRequestMessage<UserResponse>(new UserResponse()
 			{
 				Username = "BOS",
@@ -78,6 +76,27 @@ namespace Nol3.Communication.Unit.Tests
 			FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
 
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserRsp UserReqID=""101"" Username=""BOS"" UserStat=""6"" UserStatText=""TEST"" MktDepth=""1"" /></FIXML>";
+			var sb = new StringBuilder();
+
+			sb.AppendLine(String.Format("RESULT     : {0}", result));
+			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
+
+			TestContext.WriteLine(sb.ToString());
+			Assert.That(result, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void GenerateRequest_BizMsgRej()
+		{
+			string result = FIXMLManager.GenerateRequestMessage<BusinessMessageReject>(new BusinessMessageReject()
+			{
+				BusinessRejectReason = Convert.ToString(BusinessRejectReason.ApplicatonCanNotBeAccessed),
+				RefMsgType = RefMsgType.LoggingUnlogging,
+				Text = "TEST Message"
+			},
+			FIXMLManager.GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>)));
+
+			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><BizMsgRej RefMsgTyp=""BE"" BizRejRsn=""4"" Txt=""TEST Message"" /></FIXML>";
 			var sb = new StringBuilder();
 
 			sb.AppendLine(String.Format("RESULT     : {0}", result));
