@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
+namespace Nol3.Communication.Models.NolAPI
 {
 	public class UserResponse
 	{
