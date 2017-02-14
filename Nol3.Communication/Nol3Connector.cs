@@ -24,7 +24,7 @@ namespace Nol3.Communication
 		{
 			get
 			{
-				return _client.Connected;
+				return _client != null ? _client.Connected : false;
 			}
 		}
 		public static Nol3Connector CreateClient(NOL3RegistrySetting settings)
