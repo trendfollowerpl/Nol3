@@ -36,11 +36,7 @@ namespace Nol3.Communication.IntegrationTests
 
 			Nol3Connect();
 
-			var registryReader = new Nol3RegistryReader();
-
-			//Nol3.CloseConnecion();
-
-			Assert.That(registryReader.Settings.IsSynchPortActive);
+			Assert.That(Nol3RegistryReader.Settings.IsSynchPortActive);
 		}
 		#region private
 		private void Nol3Connect()

@@ -11,8 +11,7 @@ namespace Nol3.Communication.IntegrationTests
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			var registryReader = new Nol3RegistryReader();
-			Nol3 = Nol3Connector.CreateClient(registryReader.Settings);
+			Nol3 = Nol3Connector.CreateClient(Nol3RegistryReader.Settings);
 		}
 
 		[OneTimeTearDown]

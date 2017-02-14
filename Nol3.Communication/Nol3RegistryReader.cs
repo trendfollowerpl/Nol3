@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nol3.Communication.Interfaces;
+using Nol3.Communication;
 using Nol3.Communication.Models;
 using Microsoft.Win32;
 
 namespace Nol3.Communication
 {
-	public class Nol3RegistryReader : INOL3RegistryConfiguration
+	public static class Nol3RegistryReader
 	{
-		public bool IsNol3Installed
+		public static bool IsNol3Installed
 		{
 			get
 			{
@@ -19,7 +19,7 @@ namespace Nol3.Communication
 			}
 		}
 
-		public NOL3RegistrySetting Settings
+		public static NOL3RegistrySetting Settings
 		{
 			get
 			{
@@ -36,7 +36,7 @@ namespace Nol3.Communication
 		#region private
 		private const string registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings";
 
-		private int? ReadRegistry(string valueName)
+		private static int? ReadRegistry(string valueName)
 		{
 			int result;
 			if (int.TryParse((string)Registry.GetValue(registryPath, valueName, string.Empty), out result)) return result;
