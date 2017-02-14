@@ -24,7 +24,7 @@ namespace Nol3.Communication
 		{
 			get
 			{
-				return _client.Connected;
+				return _client != null ? _client.Connected : false;
 			}
 		}
 		public static Nol3Connector CreateClient(NOL3RegistrySetting settings)
@@ -43,11 +43,13 @@ namespace Nol3.Communication
 		public void CloseConnecion()
 		{
 			_client.Close();
+			_client.Dispose();
+			_client = null;
 		}
 
 		public void Dispose()
 		{
-			_client.Dispose();
+			CloseConnecion();
 		}
 	}
 }

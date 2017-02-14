@@ -16,10 +16,8 @@ namespace Nol3.Communication.Unit.Tests
 		[Description("Test if nol3 ionstallation returns bool")]
 		public void IsNolInstalled()
 		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
 			//act
-			var actualValue = regReader.IsNol3Installed;
+			var actualValue = Nol3RegistryReader.IsNol3Installed;
 			//assert
 			Assert.That(actualValue, Is.TypeOf(typeof(bool)));
 		}
@@ -27,10 +25,9 @@ namespace Nol3.Communication.Unit.Tests
 		[Description("Test if nol3 is installed")]
 		public void IsNolpathIsInRegistry()
 		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
+			//arrange			
 			//act
-			var isInstalled = regReader.IsNol3Installed;
+			var isInstalled = Nol3RegistryReader.IsNol3Installed;
 			//assert
 			Assert.That(isInstalled);
 		}
@@ -38,10 +35,8 @@ namespace Nol3.Communication.Unit.Tests
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_SynchPort()
 		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
 			//act
-			var settings = regReader.Settings;
+			var settings = Nol3RegistryReader.Settings;
 			//assert
 			Assert.That(settings.SynchPort,Is.Not.Null);
 		}
@@ -49,21 +44,17 @@ namespace Nol3.Communication.Unit.Tests
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_ASynchPort()
 		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
 			//act
-			var settings = regReader.Settings;
+			var settings = Nol3RegistryReader.Settings;
 			//assert
 			Assert.That(settings.AsynchPort, Is.Not.Null);
 		}
 		[Test]
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_IsAsynchPortActive()
-		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
+		{			
 			//act
-			var settings = regReader.Settings;
+			var settings = Nol3RegistryReader.Settings;
 			//assert
 			Assert.That(settings.IsAsynchPortActive, Is.Not.Null);
 		}
@@ -71,10 +62,8 @@ namespace Nol3.Communication.Unit.Tests
 		[Description("Test if nol3 is properly installed")]
 		public void NOL3RegistrySetting_IsSynchPortActive()
 		{
-			//arrange
-			var regReader = new Nol3RegistryReader();
 			//act
-			var settings = regReader.Settings;
+			var settings = Nol3RegistryReader.Settings;
 			//assert
 			Assert.That(settings.IsSynchPortActive, Is.Not.Null);
 		}

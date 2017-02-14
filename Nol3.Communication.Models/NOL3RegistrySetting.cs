@@ -17,8 +17,8 @@ namespace Nol3.Communication.Models
 
 	public static class Nol3RegistryKeys
 	{
-		public const string SynchPort = "nca_pasync";
-		public const string AsynchPort = "nca_psync";
+		public const string SynchPort = "nca_psync";
+		public const string AsynchPort = "nca_pasync";
 		public const string IsSynchPortActive = "ncaset_psync";
 		public const string IsAsynchPortActive = "ncaset_pasync";
 	}
