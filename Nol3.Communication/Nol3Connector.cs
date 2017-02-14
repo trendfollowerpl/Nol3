@@ -43,11 +43,14 @@ namespace Nol3.Communication
 		public void CloseConnecion()
 		{
 			_client.Close();
+			_client.Dispose();
+			_client = null;
+
 		}
 
 		public void Dispose()
 		{
-			_client.Dispose();
+			CloseConnecion();
 		}
 	}
 }
