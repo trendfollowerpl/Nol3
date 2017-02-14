@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nol3.Communication.Models.NolAPI.Requests;
+using Nol3.Communication.Models.NolAPI;
 using System.Xml.Serialization;
 using Nol3.Communication.Unit.Tests.Test_Data;
 using Nol3.Communication.Tools;

@@ -42,16 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NOL3RegistrySetting.cs" />
-    <Compile Include="NolAPI\Requests\RequestType.cs" />
+    <Compile Include="NolAPI\Structures\RequestType.cs" />
     <Compile Include="NolAPI\Requests\ROOTFIXML.cs" />
     <Compile Include="NolAPI\Requests\UserRequest.cs" />
-    <Compile Include="NolAPI\Requests\UserResponse.cs" />
-    <Compile Include="NolAPI\Requests\UserStatus.cs" />
+    <Compile Include="NolAPI\Responses\UserResponse.cs" />
+    <Compile Include="NolAPI\Structures\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NolAPI\Responses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

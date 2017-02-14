@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication.Models;
-using Nol3.Communication.Models.NolAPI.Requests;
+using Nol3.Communication.Models.NolAPI;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
