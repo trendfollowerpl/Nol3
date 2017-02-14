@@ -13,18 +13,19 @@ namespace Nol3.Communication.FIXML
 {
 	public static class FIXMLManager
 	{
-		public static string GenerateRequest<T>(T requestObject) where T : new()
+		public static string GenerateRequest<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
 		{
 			ROOTFIXML<T> request = new ROOTFIXML<T>(requestObject);
 			StringWriter stringWriter = new StringWriter();
 			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
-			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>));//, overrides);
+			XmlSerializer ser = overrides != null
+				? new XmlSerializer(typeof(ROOTFIXML<T>), overrides)
+				: new XmlSerializer(typeof(ROOTFIXML<T>));
 			XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
-
-			xmlns.Add("", "");
-
 			string result = string.Empty;
 
+			xmlns.Add("", "");
+			
 			using (stringWriter)
 			using (xmlWriter)
 			{
@@ -34,9 +35,21 @@ namespace Nol3.Communication.FIXML
 
 			return result;
 		}
+
 		public static string GenerateUserRequest(UserRequest userRequest)
 		{
 			return GenerateRequest<UserRequest>(userRequest);
+		}
+
+		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
+		{
+			XmlAttributeOverrides overrides = new XmlAttributeOverrides();
+			XmlAttributes attrs = new XmlAttributes();
+			attrs.XmlElements.Add(new XmlElementAttribute(elementName));
+
+			overrides.Add(type, "UserReq", attrs);
+
+			return overrides;
 		}
 	}
 }

@@ -45,6 +45,8 @@
     <Compile Include="NolAPI\Requests\RequestType.cs" />
     <Compile Include="NolAPI\Requests\ROOTFIXML.cs" />
     <Compile Include="NolAPI\Requests\UserRequest.cs" />
+    <Compile Include="NolAPI\Requests\UserResponse.cs" />
+    <Compile Include="NolAPI\Requests\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

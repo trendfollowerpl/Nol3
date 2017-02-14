@@ -27,7 +27,7 @@ namespace Nol3.Communication.Unit.Tests
 			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
 
 			TestContext.WriteLine(sb.ToString());
-			Assert.That(result,Is.EqualTo(expected));
+			Assert.That(result, Is.EqualTo(expected));
 		}
 		[Test]
 		public void GenerateRequest_Generic_EmptyData()
@@ -48,12 +48,36 @@ namespace Nol3.Communication.Unit.Tests
 			IdGenerator.Reset();
 			string result = FIXMLManager.GenerateUserRequest(new UserRequest()
 			{
-				Password="BOS",
-				Username="BOS",
-				UserRequestID= IdGenerator.ID,
-				UserRequestType=UserReqTyp.Login
+				Password = "BOS",
+				Username = "BOS",
+				UserRequestID = IdGenerator.ID,
+				UserRequestType = UserRequestType.Login
 			});
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""1"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>";
+			var sb = new StringBuilder();
+
+			sb.AppendLine(String.Format("RESULT     : {0}", result));
+			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
+
+			TestContext.WriteLine(sb.ToString());
+			Assert.That(result, Is.EqualTo(expected));
+		}
+		[Test]
+		public void GenerateRequest_UserResponse()
+		{
+			IdGenerator.Reset();
+
+			string result = FIXMLManager.GenerateRequest<UserResponse>(new UserResponse()
+			{
+				Username = "BOS",
+				UserRequestID = "101",
+				MarketDepth = 1,
+				UserStatus = UserStatus.Other,
+				UserStatusText = "TEST"
+			},
+			FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
+
+			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserRsp UserReqID=""101"" Username=""BOS"" UserStat=""6"" UserStatText=""TEST"" MktDepth=""1"" /></FIXML>";
 			var sb = new StringBuilder();
 
 			sb.AppendLine(String.Format("RESULT     : {0}", result));

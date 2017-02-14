@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nol3.Communication.Models.NolAPI.Requests
 {
-	public struct UserReqTyp
+	public struct UserRequestType
 	{
 		public static int Login = 1;
 		public static int Logout = 2;
