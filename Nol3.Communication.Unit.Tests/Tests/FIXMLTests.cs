@@ -19,7 +19,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_Generic_TESTData()
 		{
-			string result = FIXMLManager.GenerateRequest<TestClass>(new TestClass());
+			string result = FIXMLManager.GenerateRequestMessage<TestClass>(new TestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq TEST=""Testowy_attr"" /></FIXML>";
 			var sb = new StringBuilder();
 
@@ -32,7 +32,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_Generic_EmptyData()
 		{
-			string result = FIXMLManager.GenerateRequest<EmptyTestClass>(new EmptyTestClass());
+			string result = FIXMLManager.GenerateRequestMessage<EmptyTestClass>(new EmptyTestClass());
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq /></FIXML>";
 			var sb = new StringBuilder();
 
@@ -46,7 +46,7 @@ namespace Nol3.Communication.Unit.Tests
 		public void GenerateRequest_UserRequest()
 		{
 			IdGenerator.Reset();
-			string result = FIXMLManager.GenerateUserRequest(new UserRequest()
+			string result = FIXMLManager.GenerateUserRequestMessage(new UserRequest()
 			{
 				Password = "BOS",
 				Username = "BOS",
@@ -67,7 +67,7 @@ namespace Nol3.Communication.Unit.Tests
 		{
 			IdGenerator.Reset();
 
-			string result = FIXMLManager.GenerateRequest<UserResponse>(new UserResponse()
+			string result = FIXMLManager.GenerateRequestMessage<UserResponse>(new UserResponse()
 			{
 				Username = "BOS",
 				UserRequestID = "101",
