@@ -45,7 +45,6 @@ namespace Nol3.Communication
 			_client.Close();
 			_client.Dispose();
 			_client = null;
-
 		}
 
 		public void Dispose()

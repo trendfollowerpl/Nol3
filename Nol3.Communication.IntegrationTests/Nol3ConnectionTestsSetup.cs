@@ -19,7 +19,6 @@ namespace Nol3.Communication.IntegrationTests
 		public void OneTimeTearDown()
 		{
 			Nol3.CloseConnecion();
-			Nol3.Dispose();
 		}
 	}
 }
