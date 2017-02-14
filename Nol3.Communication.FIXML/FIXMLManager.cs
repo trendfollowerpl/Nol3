@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication.Models;
-using Nol3.Communication.Models.NolAPI.Requests;
+using Nol3.Communication.Models.NolAPI;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -13,7 +13,7 @@ namespace Nol3.Communication.FIXML
 {
 	public static class FIXMLManager
 	{
-		public static string GenerateRequest<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
+		public static string GenerateRequestMessage<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
 		{
 			ROOTFIXML<T> request = new ROOTFIXML<T>(requestObject);
 			StringWriter stringWriter = new StringWriter();
@@ -36,9 +36,9 @@ namespace Nol3.Communication.FIXML
 			return result;
 		}
 
-		public static string GenerateUserRequest(UserRequest userRequest)
+		public static string GenerateUserRequestMessage(UserRequest userRequest)
 		{
-			return GenerateRequest<UserRequest>(userRequest);
+			return GenerateRequestMessage<UserRequest>(userRequest);
 		}
 
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Nol3.Communication.Models.NolAPI.Requests
+namespace Nol3.Communication.Models.NolAPI
 {
 	[XmlRoot(ElementName = "FIXML")]
 	public class ROOTFIXML<T> where T : new()
