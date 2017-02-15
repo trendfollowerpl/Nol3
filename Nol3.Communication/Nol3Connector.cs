@@ -35,7 +35,6 @@ namespace Nol3.Communication
 
 			return _Nol3ConnectorInstance;
 		}
-
 		public void Connect()
 		{
 			_client.Connect("localhost", (int)_settings.SynchPort);
@@ -46,10 +45,26 @@ namespace Nol3.Communication
 			_client.Dispose();
 			_client = null;
 		}
-
 		public void Dispose()
 		{
 			CloseConnecion();
+		}
+		public void SendRequest(Nol3Request message)
+		{
+			_client.Send(message.RequestLength);
+			_client.Send(message.Request);
+		}
+
+		public string ReciveResponse()
+		{
+			byte[] responseBuffer = new byte[4];
+			_client.Receive(responseBuffer);
+
+			int responceDataLength = BitConverter.ToInt32(responseBuffer, 0);
+			responseBuffer = new byte[responceDataLength];
+			_client.Receive(responseBuffer);
+
+			return Encoding.ASCII.GetString(responseBuffer);
 		}
 	}
 }
