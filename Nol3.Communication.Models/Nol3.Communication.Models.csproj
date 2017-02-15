@@ -51,8 +51,14 @@
     <Compile Include="NolAPI\Responses\UserResponse.cs" />
     <Compile Include="NolAPI\Structures\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserCredentials.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Nol3.Communication.Tools\Nol3.Communication.Tools.csproj">
+      <Project>{213642BC-C49D-4129-9A0F-91C945805FD0}</Project>
+      <Name>Nol3.Communication.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

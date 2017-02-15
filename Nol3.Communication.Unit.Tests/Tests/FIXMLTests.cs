@@ -105,5 +105,28 @@ namespace Nol3.Communication.Unit.Tests
 			TestContext.WriteLine(sb.ToString());
 			Assert.That(result, Is.EqualTo(expected));
 		}
+
+		[Test]
+		public void GenerateRequest_LoginMessage()
+		{
+			//configuration setup
+			var currentID = Nol3ConfigurationManager.GetConfiguration().ID;
+			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+			{
+				ID = ++currentID,
+				Login = "BOS",
+				Password = "BOS"
+			});
+
+			string result = FIXMLManager.GenerateLoginRequest();
+			string expected = String.Format(@"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""{0}"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>",++currentID);
+			var sb = new StringBuilder();
+
+			sb.AppendLine(String.Format("RESULT     : {0}", result));
+			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
+
+			TestContext.WriteLine(sb.ToString());
+			Assert.That(result, Is.EqualTo(expected));
+		}
 	}
 }

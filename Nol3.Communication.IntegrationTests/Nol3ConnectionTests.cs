@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication;
+using Nol3.Communication.FIXML;
 
 namespace Nol3.Communication.IntegrationTests
 {
@@ -38,6 +39,18 @@ namespace Nol3.Communication.IntegrationTests
 
 			Assert.That(Nol3RegistryReader.Settings.IsSynchPortActive);
 		}
+
+		//[Test]
+		//public void CheckCanLoginToNol3()
+		//{
+		//	Nol3Connect();
+			
+
+		//	Nol3.SendRequest()
+
+		//	Assert.That(Nol3RegistryReader.Settings.IsSynchPortActive);
+		//}
+
 		#region private
 		private void Nol3Connect()
 		{

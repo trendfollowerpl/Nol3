@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nol3.Communication.Models;
+using Nol3.Communication.Tools;
 using Nol3.Communication.Models.NolAPI;
+using Nol3.Communication.Models;
+
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -25,7 +27,7 @@ namespace Nol3.Communication.FIXML
 			string result = string.Empty;
 
 			xmlns.Add("", "");
-			
+
 			using (stringWriter)
 			using (xmlWriter)
 			{
@@ -39,6 +41,17 @@ namespace Nol3.Communication.FIXML
 		public static string GenerateUserRequestMessage(UserRequest userRequest)
 		{
 			return GenerateRequestMessage<UserRequest>(userRequest);
+		}
+
+		public static string GenerateLoginRequest()
+		{
+			return GenerateUserRequestMessage(new UserRequest
+			{
+				Password = UserCredentials.Password,
+				Username = UserCredentials.Login,
+				UserRequestID = Convert.ToString(++Nol3ConfigurationManager.GetConfiguration().ID),
+				UserRequestType = UserRequestType.Login
+			});
 		}
 
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
