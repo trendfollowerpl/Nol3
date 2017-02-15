@@ -45,14 +45,22 @@ namespace Nol3.Communication.FIXML
 
 		public static string GenerateLoginRequest()
 		{
+			
+			string id;
+			using (var IDGEN = new IdGenerator())
+			{
+				id = IDGEN.ID;
+			}
+
 			return GenerateUserRequestMessage(new UserRequest
 			{
 				Password = UserCredentials.Password,
 				Username = UserCredentials.Login,
-				UserRequestID = Convert.ToString(++Nol3ConfigurationManager.GetConfiguration().ID),
+				UserRequestID = id,
 				UserRequestType = UserRequestType.Login
 			});
-		}
+		
+	}
 
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
 		{

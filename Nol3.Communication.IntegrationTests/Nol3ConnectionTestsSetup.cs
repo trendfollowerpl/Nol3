@@ -8,23 +8,24 @@ namespace Nol3.Communication.IntegrationTests
 	public partial class Nol3ConnectionTests
 	{
 		private Nol3Connector Nol3;
-
+		
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration {
-				registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings"
-			});
+			using (var _idGenerator = new IdGenerator())
+			{
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					registryPath = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings",
+					ID = Convert.ToInt32(_idGenerator.CurrentID)
+				});
+			}
 			Nol3 = Nol3Connector.CreateClient(Nol3RegistryReader.Settings);
 		}
 
 		[OneTimeTearDown]
 		public void OneTimeTearDown()
-		{
-			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
-			{
-				ID = Convert.ToInt32(IdGenerator.CurrentID)
-			});
+		{			
 			Nol3.CloseConnecion();
 		}
 	}

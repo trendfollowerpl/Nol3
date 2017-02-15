@@ -15,23 +15,27 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		[TestCase(99)]
 		public void ReturnsIncreasingBy1Values(int counter)
 		{
-			string currentID=string.Empty;
-			IdGenerator.Reset();
+
+			string ID = string.Empty;
+			var IDGen = new IdGenerator();
+			var currentID = IDGen.CurrentID;
 			for (int i = 0; i < counter; i++)
 			{
-				currentID = IdGenerator.ID;
+				ID = IDGen.ID;
 			}
-
-			Assert.That<string>(currentID, Is.EqualTo(Convert.ToString(counter)));
+			IDGen.Close();
+			Assert.That<int>(Convert.ToInt32(ID), Is.EqualTo(Convert.ToInt32(currentID) + counter));
 		}
 
 		[Test]
 		public void GeneratedIDsAreUniqueWithinOneSession()
 		{
 			var ids = new List<string>();
+			var IDGen = new IdGenerator();
+
 			for (int i = 0; i < 100; i++)
 			{
-				ids.Add(IdGenerator.ID);
+				ids.Add(IDGen.ID);
 			}
 			Assert.That(ids.Count, Is.EqualTo(ids.Distinct().Count()));
 		}

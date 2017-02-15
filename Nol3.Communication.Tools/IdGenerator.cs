@@ -7,29 +7,40 @@ using System.Configuration;
 
 namespace Nol3.Communication.Tools
 {
-	public static class IdGenerator
+	public class IdGenerator:IDisposable
 	{
-		private static int _id;
-
-		public static string ID
+		private int _id;
+		public IdGenerator()
+		{
+			_id = Nol3ConfigurationManager.GetConfiguration().ID;
+		}
+		public string ID
 		{
 			get
 			{
+				_id = Math.Max(_id, Nol3ConfigurationManager.GetConfiguration().ID);
 				_id++;
 				return Convert.ToString(_id);
 			}
 		}
-		public static string CurrentID
+		public string CurrentID
 		{
 			get
 			{
-				return Convert.ToString(_id);
+				return 
+					Convert.ToString(_id);
 			}
 		}
-
-		public static void Reset()
+		public void Close()
 		{
-			_id = 0;
+			var config = Nol3ConfigurationManager.GetConfiguration();
+			config.ID = _id;
+			Nol3ConfigurationManager.SaveConfiguration(config);
+		}
+
+		public void Dispose()
+		{
+			Close();
 		}
 	}
 }

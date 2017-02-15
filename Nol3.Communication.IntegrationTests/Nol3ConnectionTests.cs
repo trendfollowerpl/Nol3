@@ -45,28 +45,27 @@ namespace Nol3.Communication.IntegrationTests
 		public void CheckCanLoginToNol3()
 		{
 			Nol3Connect();
+			string currentID;
 			//prepare config
-			var currentID = IdGenerator.CurrentID;
-			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+			using (var IDGen = new IdGenerator())
 			{
-				ID = Convert.ToInt32(IdGenerator.ID),
-				Login = "BOS",
-				Password = "BOS"
-			});
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "BOS",
+					Password = "BOS"
+				});
+			}
 
 			Nol3.SendRequest(new Nol3Request(
 				FIXMLManager.GenerateLoginRequest()
 				));
+
 			string response = Nol3.ReciveResponse();
 
 			TestContext.WriteLine("RESPONSE: {0}", response);
-
-			;
-
-			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
-			{
-				ID = Convert.ToInt32(IdGenerator.CurrentID)
-			});
 
 			Assert.That(true);
 		}
