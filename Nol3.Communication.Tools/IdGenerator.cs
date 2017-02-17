@@ -10,17 +10,23 @@ namespace Nol3.Communication.Tools
 	public class IdGenerator:IDisposable
 	{
 		private int _id;
-		public IdGenerator()
+		private static IdGenerator _idGenerator = null;
+		private IdGenerator()
 		{
 			_id = Nol3ConfigurationManager.GetConfiguration().ID;
 		}
+
+		public static IdGenerator GerIDGenerator()
+		{
+			_idGenerator = _idGenerator == null ? new IdGenerator() : _idGenerator;
+			return _idGenerator;
+		}
+
 		public string ID
 		{
 			get
 			{
-				_id = Math.Max(_id, Nol3ConfigurationManager.GetConfiguration().ID);
-				_id++;
-				return Convert.ToString(_id);
+				return Convert.ToString(++_id);
 			}
 		}
 		public string CurrentID
@@ -36,6 +42,7 @@ namespace Nol3.Communication.Tools
 			var config = Nol3ConfigurationManager.GetConfiguration();
 			config.ID = _id;
 			Nol3ConfigurationManager.SaveConfiguration(config);
+			_idGenerator = null;
 		}
 
 		public void Dispose()

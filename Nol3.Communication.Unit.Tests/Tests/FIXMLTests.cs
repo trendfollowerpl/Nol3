@@ -45,7 +45,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_UserRequest()
 		{
-			var IDGen = new IdGenerator();
+			var IDGen = IdGenerator.GerIDGenerator();
 			string ID = IDGen.ID;
 			string result = FIXMLManager.GenerateUserRequestMessage(new UserRequest()
 			{
@@ -112,7 +112,7 @@ namespace Nol3.Communication.Unit.Tests
 		{
 			//configuration setup
 			string currentID;
-			using (var IDGEN = new IdGenerator())
+			using (var IDGEN = IdGenerator.GerIDGenerator())
 			{
 				currentID = Convert.ToString(Convert.ToInt32(IDGEN.CurrentID)+1);
 			}

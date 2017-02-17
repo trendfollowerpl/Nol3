@@ -47,7 +47,7 @@ namespace Nol3.Communication.IntegrationTests
 			Nol3Connect();
 			string currentID;
 			//prepare config
-			using (var IDGen = new IdGenerator())
+			using (var IDGen = IdGenerator.GerIDGenerator())
 			{
 				currentID = IDGen.CurrentID;
 
