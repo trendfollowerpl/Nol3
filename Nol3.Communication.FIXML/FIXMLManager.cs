@@ -62,9 +62,11 @@ namespace Nol3.Communication.FIXML
 
 		}
 
+		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, XmlAttributeOverrides overrides = null) where T : class,new()
 		{
 			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>), overrides);
 			StringReader xmlread = new StringReader(responseMessage);
+			var response = ser.Deserialize(xmlread) as ROOTFIXML<T>;
 
 			return response;
 		}
