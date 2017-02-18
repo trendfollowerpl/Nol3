@@ -17,13 +17,17 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		{
 
 			string ID = string.Empty;
-			var IDGen = IdGenerator.GerIDGenerator();
-			var currentID = IDGen.CurrentID;
-			for (int i = 0; i < counter; i++)
+			string currentID;
+
+			using (var IDGen = IdGenerator.GerIDGenerator())
 			{
-				ID = IDGen.ID;
+				currentID = IDGen.CurrentID;
+				for (int i = 0; i < counter; i++)
+				{
+					ID = IDGen.ID;
+				}
 			}
-			IDGen.Close();
+
 			Assert.That<int>(Convert.ToInt32(ID), Is.EqualTo(Convert.ToInt32(currentID) + counter));
 		}
 
@@ -31,12 +35,14 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		public void GeneratedIDsAreUniqueWithinOneSession()
 		{
 			var ids = new List<string>();
-			var IDGen = IdGenerator.GerIDGenerator();
-
-			for (int i = 0; i < 100; i++)
+			using (var IDGen = IdGenerator.GerIDGenerator())
 			{
-				ids.Add(IDGen.ID);
+				for (int i = 0; i < 100; i++)
+				{
+					ids.Add(IDGen.ID);
+				}
 			}
+
 			Assert.That(ids.Count, Is.EqualTo(ids.Distinct().Count()));
 		}
 	}
