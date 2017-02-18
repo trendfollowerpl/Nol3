@@ -71,6 +71,13 @@ namespace Nol3.Communication.FIXML
 			return response;
 		}
 
+		public static UserResponse ParseUserResponseMessege(string responseMessage)
+		{
+			return ParseResponseMessage<UserResponse>(responseMessage,
+				FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
+				).UserReq;
+		}
+
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
 		{
 			XmlAttributeOverrides overrides = new XmlAttributeOverrides();

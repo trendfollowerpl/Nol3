@@ -46,7 +46,7 @@ namespace Nol3.Communication.IntegrationTests
 
 		[Test]
 		[Description("Parse login message response to UserResponse object")]
-		public void CanParseResponseToObject_UserResponse_GeneralParserTest()
+		public void CanParseResponseToObject_UserResponse()
 		{
 			Nol3Connect();
 			string currentID;
@@ -69,11 +69,10 @@ namespace Nol3.Communication.IntegrationTests
 
 			string response = Nol3.ReciveResponse();
 
-			var userResponseObject = FIXMLManager.ParseResponseMessage<UserResponse>(response,
-				FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
 
-			Assert.That(userResponseObject.UserReq, Is.TypeOf<UserResponse>());
-			Assert.That(userResponseObject.UserReq.Username, Is.EqualTo("BOS"));
+			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
 		}
 
 		#region private
