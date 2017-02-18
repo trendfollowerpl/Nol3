@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Nol3.Communication;
 using Nol3.Communication.FIXML;
 using Nol3.Communication.Tools;
+using Nol3.Communication.Models.NolAPI;
+
 
 namespace Nol3.Communication.IntegrationTests
 {
@@ -42,7 +45,8 @@ namespace Nol3.Communication.IntegrationTests
 		}
 
 		[Test]
-		public void CheckCanLoginToNol3()
+		[Description("Parse login message response to UserResponse object")]
+		public void CanParseResponseToObject_UserResponse_GeneralParserTest()
 		{
 			Nol3Connect();
 			string currentID;
@@ -65,9 +69,11 @@ namespace Nol3.Communication.IntegrationTests
 
 			string response = Nol3.ReciveResponse();
 
-			TestContext.WriteLine("RESPONSE: {0}", response);
+			var userResponseObject = FIXMLManager.ParseResponseMessage<UserResponse>(response,
+				FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
 
-			Assert.That(true);
+			Assert.That(userResponseObject.UserReq, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.UserReq.Username, Is.EqualTo("BOS"));
 		}
 
 		#region private
