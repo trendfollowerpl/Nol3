@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nol3.Communication;
+using Nol3.Communication.FIXML;
+using Nol3.Communication.Tools;
 
 namespace Nol3.Communication.IntegrationTests
 {
@@ -38,6 +40,36 @@ namespace Nol3.Communication.IntegrationTests
 
 			Assert.That(Nol3RegistryReader.Settings.IsSynchPortActive);
 		}
+
+		[Test]
+		public void CheckCanLoginToNol3()
+		{
+			Nol3Connect();
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GerIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "BOS",
+					Password = "BOS"
+				});
+			}
+
+			Nol3.SendRequest(new Nol3Request(
+				FIXMLManager.GenerateLoginRequest()
+				));
+
+			string response = Nol3.ReciveResponse();
+
+			TestContext.WriteLine("RESPONSE: {0}", response);
+
+			Assert.That(true);
+		}
+
 		#region private
 		private void Nol3Connect()
 		{

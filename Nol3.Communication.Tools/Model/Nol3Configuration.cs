@@ -14,5 +14,9 @@ namespace Nol3.Communication.Tools.Model
 		public int ID { get; set; }
 		[XmlElement]
 		public string registryPath { get; set; } = @"HKEY_CURRENT_USER\Software\COMARCH S.A.\NOL3\7\Settings";
+		[XmlElement]
+		public string Login { get; set; }
+		[XmlElement]
+		public string Password { get; set; }
 	}
 }

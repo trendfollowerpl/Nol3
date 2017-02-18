@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Nol3Connector.cs" />
     <Compile Include="Nol3RegistryReader.cs" />
+    <Compile Include="Nol3Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
