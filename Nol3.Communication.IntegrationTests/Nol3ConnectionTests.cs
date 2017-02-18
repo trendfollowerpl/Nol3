@@ -73,6 +73,7 @@ namespace Nol3.Communication.IntegrationTests
 				FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
 
 			Assert.That(userResponseObject.UserReq, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.UserReq.Username, Is.EqualTo("BOS"));
 		}
 
 		#region private
