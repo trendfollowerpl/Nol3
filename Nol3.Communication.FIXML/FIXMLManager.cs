@@ -45,7 +45,7 @@ namespace Nol3.Communication.FIXML
 
 		public static string GenerateLoginRequest()
 		{
-			
+
 			string id;
 			using (var IDGEN = IdGenerator.GerIDGenerator())
 			{
@@ -59,8 +59,15 @@ namespace Nol3.Communication.FIXML
 				UserRequestID = id,
 				UserRequestType = UserRequestType.Login
 			});
-		
-	}
+
+		}
+
+		{
+			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>), overrides);
+			StringReader xmlread = new StringReader(responseMessage);
+
+			return response;
+		}
 
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
 		{
