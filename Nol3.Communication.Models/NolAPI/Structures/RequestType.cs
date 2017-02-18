@@ -10,6 +10,6 @@ namespace Nol3.Communication.Models.NolAPI
 	{
 		public static int Login = 1;
 		public static int Logout = 2;
-		public static int status = 4;
+		public static int Status = 4;
 	}
 }

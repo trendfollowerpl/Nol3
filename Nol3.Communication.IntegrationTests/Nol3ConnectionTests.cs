@@ -64,15 +64,50 @@ namespace Nol3.Communication.IntegrationTests
 			}
 
 			Nol3.SendRequest(new Nol3Request(
-				FIXMLManager.GenerateLoginRequest()
+				FIXMLManager.GenerateUserLoginRequest()
 				));
 
 			string response = Nol3.ReciveResponse();
 
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
 
+			Nol3.SendRequest(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest()));
+
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
+		}
+
+		[Test]
+		public void CanParseResponseToObject_BusinessMessageReject()
+		{
+			Nol3Connect();
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GerIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "XXX",
+					Password = "XXX"
+				});
+			}
+
+			Nol3.SendRequest(new Nol3Request(
+				FIXMLManager.GenerateRequestMessage<UserRequest>(new UserRequest
+				{
+					UserRequestType = 20
+				}
+				)));
+
+			string response = Nol3.ReciveResponse();
+
+			var userResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(response);
+			Nol3.SendRequest(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest()));
+			Assert.That(userResponseObject, Is.TypeOf<BusinessMessageReject>());
+			Assert.That(userResponseObject.Text, Is.EqualTo("UserReqID have to be integer"));
 		}
 
 		#region private
