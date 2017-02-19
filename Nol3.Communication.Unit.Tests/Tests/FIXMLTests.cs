@@ -45,7 +45,7 @@ namespace Nol3.Communication.Unit.Tests
 		[Test]
 		public void GenerateRequest_UserRequest()
 		{
-			var IDGen = IdGenerator.GerIDGenerator();
+			var IDGen = IdGenerator.GetIDGenerator();
 			string ID = IDGen.ID;
 			string result = FIXMLManager.GenerateUserRequestMessage(new UserRequest()
 			{
@@ -112,7 +112,7 @@ namespace Nol3.Communication.Unit.Tests
 		{
 			//configuration setup
 			string currentID;
-			using (var IDGEN = IdGenerator.GerIDGenerator())
+			using (var IDGEN = IdGenerator.GetIDGenerator())
 			{
 				currentID = Convert.ToString(Convert.ToInt32(IDGEN.CurrentID)+1);
 			}
@@ -124,7 +124,7 @@ namespace Nol3.Communication.Unit.Tests
 				Password="BOS"
 			});
 			
-			string result = FIXMLManager.GenerateLoginRequest();
+			string result = FIXMLManager.GenerateUserLoginRequest();
 			string expected = String.Format(@"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""{0}"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>", currentID);
 			var sb = new StringBuilder();
 

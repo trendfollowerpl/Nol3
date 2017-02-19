@@ -43,11 +43,11 @@ namespace Nol3.Communication.FIXML
 			return GenerateRequestMessage<UserRequest>(userRequest);
 		}
 
-		public static string GenerateLoginRequest()
+		public static string GenerateUserLoginRequest()
 		{
 
 			string id;
-			using (var IDGEN = IdGenerator.GerIDGenerator())
+			using (var IDGEN = IdGenerator.GetIDGenerator())
 			{
 				id = IDGEN.ID;
 			}
@@ -62,6 +62,43 @@ namespace Nol3.Communication.FIXML
 
 		}
 
+		public static string GenerateUserLogoutRequest()
+		{
+
+			string id;
+			using (var IDGEN = IdGenerator.GetIDGenerator())
+			{
+				id = IDGEN.ID;
+			}
+
+			return GenerateUserRequestMessage(new UserRequest
+			{
+				Password = UserCredentials.Password,
+				Username = UserCredentials.Login,
+				UserRequestID = id,
+				UserRequestType = UserRequestType.Logout
+			});
+
+		}
+
+		public static string GenerateUserStatusRequest()
+		{
+
+			string id;
+			using (var IDGEN = IdGenerator.GetIDGenerator())
+			{
+				id = IDGEN.ID;
+			}
+
+			return GenerateUserRequestMessage(new UserRequest
+			{
+				Password = UserCredentials.Password,
+				Username = UserCredentials.Login,
+				UserRequestID = id,
+				UserRequestType = UserRequestType.Status
+			});
+		}
+
 		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, XmlAttributeOverrides overrides = null) where T : class,new()
 		{
 			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>), overrides);
@@ -69,6 +106,19 @@ namespace Nol3.Communication.FIXML
 			var response = ser.Deserialize(xmlread) as ROOTFIXML<T>;
 
 			return response;
+		}
+
+		public static UserResponse ParseUserResponseMessege(string responseMessage)
+		{
+			return ParseResponseMessage<UserResponse>(responseMessage,
+				GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
+				).UserReq;
+		}
+
+		public static BusinessMessageReject ParseBusinessMessageRejectMessage(string responseMessage)
+		{
+			return ParseResponseMessage<BusinessMessageReject>(responseMessage,
+				GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))).UserReq;
 		}
 
 		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)

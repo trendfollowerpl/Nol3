@@ -17,41 +17,12 @@ namespace Nol3.Communication.IntegrationTests
 	public partial class Nol3ConnectionTests
 	{
 		[Test]
-		public void CheckIfCanConnectToNol()
+		[Repeat(2)]
+		public void CheckIfUserCanLoginToNol()
 		{
-			Nol3Connect();
-
-			bool isConnected = Nol3.IsConnected;
-
-			Assert.That(isConnected);
-		}
-
-		[Test]
-		public void CheckIfCanDisConnectFromNol()
-		{
-			Nol3Connect();
-			Nol3.CloseConnecion();
-			bool isConnected = Nol3.IsConnected;
-
-			Assert.That(!isConnected);
-		}
-		[Test]
-		public void CheckIfCanConnectToNol_registryCheck()
-		{
-
-			Nol3Connect();
-
-			Assert.That(Nol3RegistryReader.Settings.IsSynchPortActive);
-		}
-
-		[Test]
-		[Description("Parse login message response to UserResponse object")]
-		public void CanParseResponseToObject_UserResponse_GeneralParserTest()
-		{
-			Nol3Connect();
 			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GerIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator())
 			{
 				currentID = IDGen.CurrentID;
 
@@ -62,28 +33,166 @@ namespace Nol3.Communication.IntegrationTests
 					Password = "BOS"
 				});
 			}
-
-			Nol3.SendRequest(new Nol3Request(
-				FIXMLManager.GenerateLoginRequest()
-				));
-
-			string response = Nol3.ReciveResponse();
-
-			var userResponseObject = FIXMLManager.ParseResponseMessage<UserResponse>(response,
-				FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>)));
-
-			Assert.That(userResponseObject.UserReq, Is.TypeOf<UserResponse>());
-			Assert.That(userResponseObject.UserReq.Username, Is.EqualTo("BOS"));
-		}
-
-		#region private
-		private void Nol3Connect()
-		{
-			if (!Nol3.IsConnected)
+			string response;
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserLoginRequest()
+				)))
 			{
-				Nol3.Connect();
+				response = Nol3.ReciveResponseSynch(client);
 			}
+
+			//cleanup - logout
+			using (Nol3.SendRequestSynch(new Nol3Request(
+					FIXMLManager.GenerateUserLogoutRequest()
+					)))
+			{
+			}
+
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+
+			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
+			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedIn));
 		}
-		#endregion
+		[Test]
+		public void CheckIfUserCanLogoutToNol()
+		{
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GetIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "BOS",
+					Password = "BOS"
+				});
+			}
+			string response;
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserLoginRequest()
+				)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			//cleanup - logout
+			using (var client = Nol3.SendRequestSynch(new Nol3Request(
+					FIXMLManager.GenerateUserLogoutRequest()
+					)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+
+			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
+			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedOut));
+		}
+
+		[Test]
+		public void UserStatusCanBecheckedAfterLogin()
+		{
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GetIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "BOS",
+					Password = "BOS"
+				});
+			}
+			string response;
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserLoginRequest()
+				)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserStatusRequest()
+				)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			//cleanup - logout
+			using (var client = Nol3.SendRequestSynch(new Nol3Request(
+					FIXMLManager.GenerateUserLogoutRequest()
+					)))
+			{
+			}
+
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+
+			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
+			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedIn));
+			Assert.That(userResponseObject.MarketDepth, Is.EqualTo(1));
+		}
+		[Test]
+		public void UserStatusCanBecheckedAfterLogout()
+		{
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GetIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "BOS",
+					Password = "BOS"
+				});
+			}
+			string response;
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserLoginRequest()
+				)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			//cleanup - logout
+			using (var client = Nol3.SendRequestSynch(new Nol3Request(
+					FIXMLManager.GenerateUserLogoutRequest()
+					)))
+			{
+			}
+
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateUserStatusRequest()
+				)))
+			{
+				response = Nol3.ReciveResponseSynch(client);
+			}
+
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+
+			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
+			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
+			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedOut));			
+		}
 	}
 }

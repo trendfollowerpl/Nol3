@@ -16,7 +16,7 @@ namespace Nol3.Communication.Tools
 			_id = Nol3ConfigurationManager.GetConfiguration().ID;
 		}
 
-		public static IdGenerator GerIDGenerator()
+		public static IdGenerator GetIDGenerator()
 		{
 			_idGenerator = _idGenerator == null ? new IdGenerator() : _idGenerator;
 			return _idGenerator;
