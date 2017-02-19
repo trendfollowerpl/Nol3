@@ -19,7 +19,7 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 			string ID = string.Empty;
 			string currentID;
 
-			using (var IDGen = IdGenerator.GerIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator())
 			{
 				currentID = IDGen.CurrentID;
 				for (int i = 0; i < counter; i++)
@@ -35,7 +35,7 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		public void GeneratedIDsAreUniqueWithinOneSession()
 		{
 			var ids = new List<string>();
-			using (var IDGen = IdGenerator.GerIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator())
 			{
 				for (int i = 0; i < 100; i++)
 				{

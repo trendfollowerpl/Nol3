@@ -14,6 +14,15 @@ namespace Nol3.Communication
 
 		private NOL3RegistrySetting _settings;
 
+		#region ctor
+		private Nol3Connector(NOL3RegistrySetting settings)
+		{
+			_settings = settings;
+		}
+		#endregion
+		/// <summary>
+		/// Factory function for creating Nol3Connector singleton instance 
+		/// </summary>
 		public static Nol3Connector CreateClient(NOL3RegistrySetting settings)
 		{
 			_Nol3ConnectorInstance = _Nol3ConnectorInstance != null
@@ -22,11 +31,20 @@ namespace Nol3.Communication
 
 			return _Nol3ConnectorInstance;
 		}
-		public void SendRequestSynch(Nol3Request message, Socket synchClient)
+		/// <summary>
+		/// Nol3 requires unique socket per synch request. Use using(){} on returned Socket object
+		/// </summary>
+		public Socket SendRequestSynch(Nol3Request message)
 		{
+			var synchClient = this.GetSynchClinet();
 			synchClient.Send(message.RequestLength);
 			synchClient.Send(message.Request);
+
+			return synchClient;
 		}
+		/// <summary>
+		/// Recive message from NOL3 using Socked Created during SendRequestSynch call. Use dispose after Socket is used.
+		/// </summary>		
 		public string ReciveResponseSynch(Socket synchClinet)
 		{
 
@@ -38,12 +56,7 @@ namespace Nol3.Communication
 			synchClinet.Receive(responseBuffer);
 
 			return Encoding.ASCII.GetString(responseBuffer);
-		}
-
-		private Nol3Connector(NOL3RegistrySetting settings)
-		{
-			_settings = settings;
-		}
+		}		
 		public Socket GetSynchClinet()
 		{
 			var _synchClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

@@ -47,7 +47,7 @@ namespace Nol3.Communication.FIXML
 		{
 
 			string id;
-			using (var IDGEN = IdGenerator.GerIDGenerator())
+			using (var IDGEN = IdGenerator.GetIDGenerator())
 			{
 				id = IDGEN.ID;
 			}
@@ -66,7 +66,7 @@ namespace Nol3.Communication.FIXML
 		{
 
 			string id;
-			using (var IDGEN = IdGenerator.GerIDGenerator())
+			using (var IDGEN = IdGenerator.GetIDGenerator())
 			{
 				id = IDGEN.ID;
 			}
@@ -85,7 +85,7 @@ namespace Nol3.Communication.FIXML
 		{
 
 			string id;
-			using (var IDGEN = IdGenerator.GerIDGenerator())
+			using (var IDGEN = IdGenerator.GetIDGenerator())
 			{
 				id = IDGEN.ID;
 			}

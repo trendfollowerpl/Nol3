@@ -12,7 +12,7 @@ namespace Nol3.Communication.IntegrationTests
 		[SetUp]
 		public void SetUp()
 		{
-			using (var _idGenerator = IdGenerator.GerIDGenerator())
+			using (var _idGenerator = IdGenerator.GetIDGenerator())
 			{
 				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
 				{
