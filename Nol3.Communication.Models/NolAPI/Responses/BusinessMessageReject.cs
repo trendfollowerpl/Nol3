@@ -15,5 +15,11 @@ namespace Nol3.Communication.Models.NolAPI
 		public string BusinessRejectReason { get; set; }
 		[XmlAttribute(AttributeName = "Txt")]
 		public string Text { get; set; }
+
+		public override string ToString()
+		{
+			return String.Format("Reject response from NOL: \nBusiness Reject Reason: {0}\nRefMsgType: {1}\nMessage: {2}"
+			, BusinessRejectReason, RefMsgType, Text);
+		}
 	}
 }
