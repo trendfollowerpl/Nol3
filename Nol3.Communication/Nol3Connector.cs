@@ -40,11 +40,10 @@ namespace Nol3.Communication
 		/// <summary>
 		/// Nol3 requires unique socket per synch request. Use using(){} on returned Socket object
 		/// </summary>
-		public Socket SendRequestSynch(Nol3Request message)
+		public Socket SendRequestSynch(Nol3Request request)
 		{
 			var synchClient = this.GetSynchClinet();
-			synchClient.Send(message.RequestLength);
-			synchClient.Send(message.Request);
+			SendRequest(request, synchClient);
 
 			return synchClient;
 		}
