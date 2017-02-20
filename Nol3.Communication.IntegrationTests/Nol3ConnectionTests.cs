@@ -40,7 +40,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -79,7 +79,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -87,7 +87,7 @@ namespace Nol3.Communication.IntegrationTests
 					FIXMLManager.GenerateUserLogoutRequest()
 					)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
@@ -120,7 +120,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			using (var client =
@@ -129,7 +129,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserStatusRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -169,7 +169,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -185,7 +185,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserStatusRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
