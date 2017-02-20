@@ -27,16 +27,16 @@ namespace Nol3.Communication
 
 			return _nol3ClientInstance;
 		}
-
+		#region events
 		public event Action<UserResponse> UserResponseEvent;
 		public event Action<BusinessMessageReject> BusinessMessageRejectEvent;
 		public event Action<string> UnknownMessageTypeEvent;
-
+		#endregion
 		public void LoginNol3()
 		{
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())))
 			{
-				var responseMessage=_nol3Connector.ReciveResponse(socket);
+				var responseMessage = _nol3Connector.ReciveResponse(socket);
 				MessageParser(responseMessage);
 			}
 		}
