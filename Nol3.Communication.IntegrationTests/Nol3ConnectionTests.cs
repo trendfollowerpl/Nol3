@@ -40,7 +40,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -79,7 +79,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -87,7 +87,7 @@ namespace Nol3.Communication.IntegrationTests
 					FIXMLManager.GenerateUserLogoutRequest()
 					)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
@@ -120,7 +120,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			using (var client =
@@ -129,7 +129,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserStatusRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -169,7 +169,7 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserLoginRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			//cleanup - logout
@@ -185,14 +185,48 @@ namespace Nol3.Communication.IntegrationTests
 						FIXMLManager.GenerateUserStatusRequest()
 				)))
 			{
-				response = Nol3.ReciveResponseSynch(client);
+				response = Nol3.ReciveResponse(client);
 			}
 
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
-			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedOut));			
+			Assert.That(userResponseObject.UserStatus, Is.EqualTo(UserStatus.LoggedOut));
+		}
+
+		[Test]
+		public void Nol3BusinessMessageRejectIParsedProperlyfromResponse()
+		{
+			string currentID;
+			//prepare config
+			using (var IDGen = IdGenerator.GetIDGenerator())
+			{
+				currentID = IDGen.CurrentID;
+
+				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+				{
+					ID = Convert.ToInt32(IDGen.ID),
+					Login = "XXX",
+					Password = "XXX"
+				});
+			}
+			string response;
+			using (var client =
+				Nol3.SendRequestSynch(
+					new Nol3Request(
+						FIXMLManager.GenerateRequestMessage<UserRequest>(
+							new UserRequest { UserRequestType = 666 }
+				))))
+			{
+				response = Nol3.ReciveResponse(client);
+			}
+
+			var userResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(response);
+
+			Assert.That(userResponseObject, Is.TypeOf<BusinessMessageReject>());
+			Assert.That(userResponseObject.BusinessRejectReason, Is.EqualTo(BusinessRejectReason.XMLParsingError));
+			Assert.That(userResponseObject.Text, Is.EqualTo("UserReqID have to be integer"));
 		}
 	}
 }
