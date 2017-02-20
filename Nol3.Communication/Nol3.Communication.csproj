@@ -44,12 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\Nol3BusinessMessageRejectException.cs" />
+    <Compile Include="Nol3Client.cs" />
     <Compile Include="Nol3Connector.cs" />
     <Compile Include="Nol3RegistryReader.cs" />
     <Compile Include="Nol3Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nol3.Communication.FIXML\Nol3.Communication.FIXML.csproj">
+      <Project>{4cf2b21a-c4b6-4ef3-ab58-0489c1cdbf8a}</Project>
+      <Name>Nol3.Communication.FIXML</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nol3.Communication.Models\Nol3.Communication.Models.csproj">
       <Project>{045F13BC-72E6-423F-8696-C21F8A09BEE8}</Project>
       <Name>Nol3.Communication.Models</Name>
