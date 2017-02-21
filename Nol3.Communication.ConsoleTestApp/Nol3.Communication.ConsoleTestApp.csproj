@@ -4,16 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F789D1C0-8838-47CC-A583-68277334D520}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{46AB2581-0E12-4F2E-8765-54C5766E1396}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nol3.Communication</RootNamespace>
-    <AssemblyName>Nol3.Communication</AssemblyName>
+    <RootNamespace>Nol3.Communication.ConsoleTestApp</RootNamespace>
+    <AssemblyName>Nol3.Communication.ConsoleTestApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,10 +23,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,25 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\Nol3BusinessMessageRejectException.cs" />
-    <Compile Include="Nol3Client.cs" />
-    <Compile Include="Nol3Connector.cs" />
-    <Compile Include="Nol3RegistryReader.cs" />
-    <Compile Include="Nol3Request.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nol3.Communication.FIXML\Nol3.Communication.FIXML.csproj">
-      <Project>{4cf2b21a-c4b6-4ef3-ab58-0489c1cdbf8a}</Project>
-      <Name>Nol3.Communication.FIXML</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Nol3.Communication.Models\Nol3.Communication.Models.csproj">
-      <Project>{045F13BC-72E6-423F-8696-C21F8A09BEE8}</Project>
+      <Project>{045f13bc-72e6-423f-8696-c21f8a09bee8}</Project>
       <Name>Nol3.Communication.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nol3.Communication.Tools\Nol3.Communication.Tools.csproj">
       <Project>{213642bc-c49d-4129-9a0f-91c945805fd0}</Project>
       <Name>Nol3.Communication.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nol3.Communication\Nol3.Communication.csproj">
+      <Project>{f789d1c0-8838-47cc-a583-68277334d520}</Project>
+      <Name>Nol3.Communication</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
