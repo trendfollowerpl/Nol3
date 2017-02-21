@@ -37,7 +37,6 @@ namespace Nol3.Communication
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())))
 			{
 				var responseMessage = _nol3Connector.ReciveResponse(socket);
-				MessageParser(responseMessage);
 			}
 		}
 		public void LogoutNol3()
@@ -45,26 +44,36 @@ namespace Nol3.Communication
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())))
 			{
 				var responseMessage = _nol3Connector.ReciveResponse(socket);
-				MessageParser(responseMessage);
 			}
 		}
 
-		private void MessageParser(string message)
 		{
-			var userResponseObject = FIXMLManager.ParseUserResponseMessege(message);
-			if (userResponseObject != null)
+			Task<bool> t1 = new TaskFactory<bool>().StartNew(() =>
 			{
-				UserResponseEvent?.Invoke(userResponseObject);
-				return;
-			}
+				var userResponseObject = FIXMLManager.ParseUserResponseMessege(message);
+				if (userResponseObject != null)
+				{
+					UserResponseEvent?.Invoke(userResponseObject);
+					return true;
+				}
+				return false;
+			});
 
-			var rejectResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(message);
-			if (rejectResponseObject != null)
-			{
-				BusinessMessageRejectEvent?.Invoke(rejectResponseObject);
-				return;
-			}
-			UnknownMessageTypeEvent?.Invoke(message);
+			Task<bool> t2 = new TaskFactory<bool>().StartNew(() =>
+			 {
+				 var rejectResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(message);
+				 if (rejectResponseObject != null)
+				 {
+					 BusinessMessageRejectEvent?.Invoke(rejectResponseObject);
+					 return true;
+				 }
+				 return false;
+			 });
+
+			return Task.WhenAll<bool>(new Task<bool>[] { t1, t2 }).ContinueWith(resultList =>
+			  {
+				  if (resultList.Result.All(x => x == false)) UnknownMessageTypeEvent?.Invoke(message);
+			  });
 		}
 	}
 }
