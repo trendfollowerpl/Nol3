@@ -37,6 +37,7 @@ namespace Nol3.Communication
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())))
 			{
 				var responseMessage = _nol3Connector.ReciveResponse(socket);
+				MessageParserAsync(responseMessage).Wait();
 			}
 		}
 		public void LogoutNol3()
@@ -44,9 +45,11 @@ namespace Nol3.Communication
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())))
 			{
 				var responseMessage = _nol3Connector.ReciveResponse(socket);
+				MessageParserAsync(responseMessage).Wait();
 			}
 		}
 
+		private Task MessageParserAsync(string message)
 		{
 			Task<bool> t1 = new TaskFactory<bool>().StartNew(() =>
 			{
