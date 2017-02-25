@@ -29,8 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EC9EAE92
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.ConsoleTestApp", "Nol3.Communication.ConsoleTestApp\Nol3.Communication.ConsoleTestApp.csproj", "{46AB2581-0E12-4F2E-8765-54C5766E1396}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nol3.Communication.WPFTestAPP", "Nol3.Communication.WPFTestAPP\Nol3.Communication.WPFTestAPP.csproj", "{238EC003-2FCE-4F82-9EAA-46891F7A970C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,22 +153,6 @@ Global
 		{46AB2581-0E12-4F2E-8765-54C5766E1396}.Release|x64.Build.0 = Release|Any CPU
 		{46AB2581-0E12-4F2E-8765-54C5766E1396}.Release|x86.ActiveCfg = Release|Any CPU
 		{46AB2581-0E12-4F2E-8765-54C5766E1396}.Release|x86.Build.0 = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|ARM.Build.0 = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|x64.Build.0 = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Debug|x86.Build.0 = Debug|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|ARM.ActiveCfg = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|ARM.Build.0 = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|x64.ActiveCfg = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|x64.Build.0 = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|x86.ActiveCfg = Release|Any CPU
-		{238EC003-2FCE-4F82-9EAA-46891F7A970C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

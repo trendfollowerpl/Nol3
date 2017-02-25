@@ -111,26 +111,30 @@ namespace Nol3.Communication.Unit.Tests
 		public void GenerateRequest_LoginMessage()
 		{
 			//configuration setup
-			string currentID;
-			using (var IDGEN = IdGenerator.GetIDGenerator())
-			{
-				currentID = Convert.ToString(Convert.ToInt32(IDGEN.CurrentID)+1);
-			}
+			string currentID =
+				Disposable
+					.Using(
+						() => IdGenerator.GetIDGenerator(),
+						(idGen)=> Convert.ToString(Convert.ToInt32(idGen.CurrentID) + 1)
+					);
 
 			Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
 			{
-				ID=Convert.ToInt32(currentID)-1,
-				Login="BOS",
-				Password="BOS"
+				ID = Convert.ToInt32(currentID) - 1,
+				Login = "BOS",
+				Password = "BOS"
 			});
-			
+
 			string result = FIXMLManager.GenerateUserLoginRequest();
 			string expected = String.Format(@"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserReq UserReqID=""{0}"" UserReqTyp=""1"" Username=""BOS"" Password=""BOS"" /></FIXML>", currentID);
-			var sb = new StringBuilder();
+			
+			TestContext.WriteLine(
+				new StringBuilder()
+					.AppendLine(String.Format("RESULT     : {0}", result))
+					.AppendLine(String.Format("EXPECTED: {0}", expected))
+					.ToString()
+				);
 
-			sb.AppendLine(String.Format("RESULT     : {0}", result));
-			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
-			TestContext.WriteLine(sb.ToString());
 			Assert.That(result, Is.EqualTo(expected));
 		}
 	}

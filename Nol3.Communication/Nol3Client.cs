@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nol3.Communication.Tools;
 using Nol3.Communication.FIXML;
 using System.Net.Sockets;
 using System.Threading;
@@ -42,6 +43,16 @@ namespace Nol3.Communication
 		public void LoginNol3()
 		{
 			string responseMessage;
+			Disposable.Using<Socket,object>(
+				() => _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
+				(disp) =>
+				{
+					responseMessage = _nol3Connector.ReciveResponse(disp);
+					MessageParserToEventsAsync(responseMessage).Wait();
+					return null;
+				}
+				);
+
 			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())))
 			{
 				responseMessage = _nol3Connector.ReciveResponse(socket);

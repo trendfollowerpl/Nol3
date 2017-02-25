@@ -15,18 +15,23 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		[TestCase(99)]
 		public void ReturnsIncreasingBy1Values(int counter)
 		{
+			string currentID = string.Empty;
+			string ID =
+				Disposable
+					.Using<IdGenerator, string>(
+					() => IdGenerator.GetIDGenerator(),
+					(disp) =>
+						{
+							string id = string.Empty;
+							currentID = disp.CurrentID;
+							Enumerable
+								.Range(0, counter)
+								.ToList()
+								.ForEach((i) => id = disp.ID);
 
-			string ID = string.Empty;
-			string currentID;
-
-			using (var IDGen = IdGenerator.GetIDGenerator())
-			{
-				currentID = IDGen.CurrentID;
-				for (int i = 0; i < counter; i++)
-				{
-					ID = IDGen.ID;
-				}
-			}
+							return id;
+						}
+					);
 
 			Assert.That<int>(Convert.ToInt32(ID), Is.EqualTo(Convert.ToInt32(currentID) + counter));
 		}
@@ -34,14 +39,22 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 		[Test]
 		public void GeneratedIDsAreUniqueWithinOneSession()
 		{
-			var ids = new List<string>();
-			using (var IDGen = IdGenerator.GetIDGenerator())
-			{
-				for (int i = 0; i < 100; i++)
-				{
-					ids.Add(IDGen.ID);
-				}
-			}
+			IList<string> ids =
+				Disposable
+				.Using<IdGenerator, IList<string>>(
+					() => IdGenerator.GetIDGenerator(),
+					(idGen) =>
+					{
+						var tmp = new List<string>();
+						Enumerable
+							.Range(0, 100)
+							.ToList()
+							.ForEach(
+								(i) => tmp.Add(idGen.ID)
+								);
+
+						return tmp;
+					});
 
 			Assert.That(ids.Count, Is.EqualTo(ids.Distinct().Count()));
 		}
