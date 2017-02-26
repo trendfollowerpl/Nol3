@@ -17,8 +17,6 @@ namespace Nol3.Communication.FIXML
 	{
 		public static string GenerateRequestMessage<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
 		{
-			ROOTFIXML<T> request = new ROOTFIXML<T>(requestObject);
-
 			XmlSerializer ser = overrides != null
 				? new XmlSerializer(typeof(ROOTFIXML<T>), overrides)
 				: new XmlSerializer(typeof(ROOTFIXML<T>));
@@ -32,7 +30,7 @@ namespace Nol3.Communication.FIXML
 						() => XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true }),
 						(writer) =>
 							{
-								ser.Serialize(writer, request, xmlns);
+								ser.Serialize(writer, new ROOTFIXML<T>(requestObject), xmlns);
 								return stringWriter.ToString();
 							}
 					);
@@ -103,11 +101,13 @@ namespace Nol3.Communication.FIXML
 		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, XmlAttributeOverrides overrides = null) where T : class, new()
 		{
 			if (string.IsNullOrEmpty(responseMessage)) return null;
-			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>), overrides);
-			StringReader xmlread = new StringReader(responseMessage);
-			var response = ser.Deserialize(xmlread) as ROOTFIXML<T>;
-
-			return response;
+			
+			return 
+				Disposable.Using(
+					()=> new StringReader(responseMessage),
+					(xmlread)=> new XmlSerializer(typeof(ROOTFIXML<T>), overrides)
+									.Deserialize(xmlread) as ROOTFIXML<T>
+					);
 		}
 
 		public static UserResponse ParseUserResponseMessege(string responseMessage)
