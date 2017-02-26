@@ -81,7 +81,7 @@ namespace Nol3.Communication.Unit.Tests
 							UserStatus = UserStatus.Other,
 							UserStatusText = "TEST"
 						},
-						() => FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
+						FIXMLManager.GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
 					);
 
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><UserRsp UserReqID=""101"" Username=""BOS"" UserStat=""6"" UserStatText=""TEST"" MktDepth=""1"" /></FIXML>";
@@ -108,7 +108,7 @@ namespace Nol3.Communication.Unit.Tests
 							RefMsgType = RefMsgType.LoggingUnlogging,
 							Text = "TEST Message"
 						},
-						() => FIXMLManager.GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))
+						FIXMLManager.GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))
 					);
 
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><BizMsgRej RefMsgTyp=""BE"" BizRejRsn=""4"" Txt=""TEST Message"" /></FIXML>";

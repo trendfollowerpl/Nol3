@@ -12,37 +12,18 @@ namespace Nol3.Communication
 {
 	public static class Nol3RegistryReader
 	{
-		public static bool IsNol3Installed
-		{
-			get
-			{
-				return ReadRegistry(Nol3RegistryKeys.SynchPort) == null ? false : true;
-			}
-		}
+		public static bool IsNol3Installed => ReadRegistry(Nol3RegistryKeys.SynchPort) == null ? false : true;
 
-		public static NOL3RegistrySetting Settings
-		{
-			get
-			{
-				return new NOL3RegistrySetting
-				{
-					SynchPort = ReadRegistry(Nol3RegistryKeys.SynchPort),
-					AsynchPort = ReadRegistry(Nol3RegistryKeys.AsynchPort),
-					IsSynchPortActive = Convert.ToBoolean(ReadRegistry(Nol3RegistryKeys.IsSynchPortActive)),
-					IsAsynchPortActive = Convert.ToBoolean(ReadRegistry(Nol3RegistryKeys.IsAsynchPortActive))
-				};
-			}
-		}
-
+		public static NOL3RegistrySetting Settings =>
+			 new NOL3RegistrySetting
+			 {
+				 SynchPort = ReadRegistry(Nol3RegistryKeys.SynchPort),
+				 AsynchPort = ReadRegistry(Nol3RegistryKeys.AsynchPort),
+				 IsSynchPortActive = Convert.ToBoolean(ReadRegistry(Nol3RegistryKeys.IsSynchPortActive)),
+				 IsAsynchPortActive = Convert.ToBoolean(ReadRegistry(Nol3RegistryKeys.IsAsynchPortActive))
+			 };
 		#region private
-
-		private static string registryPath
-		{
-			get
-			{
-				return Nol3ConfigurationManager.GetConfiguration().registryPath;
-			}
-		}
+		private static string registryPath => Nol3ConfigurationManager.GetConfiguration().registryPath;
 
 		private static int? ReadRegistry(string valueName)
 		{

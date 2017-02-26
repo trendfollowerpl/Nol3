@@ -116,17 +116,17 @@ namespace Nol3.Communication.FIXML
 		public static UserResponse ParseUserResponseMessege(Func<string> responseMessage)
 		{
 			return ParseResponseMessage<UserResponse>(responseMessage,
-				()=>GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
+				GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
 				).UserReq;
 		}
 
 		public static BusinessMessageReject ParseBusinessMessageRejectMessage(Func<string> responseMessage)
 		{
 			return ParseResponseMessage<BusinessMessageReject>(responseMessage,
-				()=>GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))).UserReq;
+				GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))).UserReq;
 		}
 
-		public static XmlAttributeOverrides GenerateXMLAttributeOverride(string elementName, Type type)
+		public static Func<XmlAttributeOverrides> GenerateXMLAttributeOverride(string elementName, Type type)
 		{
 			XmlAttributeOverrides overrides = new XmlAttributeOverrides();
 			XmlAttributes attrs = new XmlAttributes();
@@ -134,7 +134,7 @@ namespace Nol3.Communication.FIXML
 
 			overrides.Add(type, "UserReq", attrs);
 
-			return overrides;
+			return ()=>overrides;
 		}
 	}
 }

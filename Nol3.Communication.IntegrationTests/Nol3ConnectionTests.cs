@@ -49,7 +49,7 @@ namespace Nol3.Communication.IntegrationTests
 					(client) => null
 				);
 
-			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(()=>response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
@@ -89,7 +89,7 @@ namespace Nol3.Communication.IntegrationTests
 				response = Nol3.ReciveResponse(client);
 			}
 
-			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(()=>response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
@@ -138,7 +138,7 @@ namespace Nol3.Communication.IntegrationTests
 			{
 			}
 
-			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(()=>response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
@@ -187,7 +187,7 @@ namespace Nol3.Communication.IntegrationTests
 				response = Nol3.ReciveResponse(client);
 			}
 
-			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
+			var userResponseObject = FIXMLManager.ParseUserResponseMessege(()=>response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
 			Assert.That(userResponseObject.Username, Is.EqualTo("BOS"));
@@ -221,7 +221,7 @@ namespace Nol3.Communication.IntegrationTests
 				response = Nol3.ReciveResponse(client);
 			}
 
-			var userResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(response);
+			var userResponseObject = FIXMLManager.ParseBusinessMessageRejectMessage(()=>response);
 
 			Assert.That(userResponseObject, Is.TypeOf<BusinessMessageReject>());
 			Assert.That(userResponseObject.BusinessRejectReason, Is.EqualTo(BusinessRejectReason.XMLParsingError));

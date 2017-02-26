@@ -14,19 +14,7 @@ namespace Nol3.Communication
 			_message = message;
 		}
 
-		public byte[] Request
-		{
-			get
-			{
-				return Encoding.ASCII.GetBytes(_message);
-			}
-		}
-		public byte[] RequestLength
-		{
-			get
-			{
-				return BitConverter.GetBytes(Request.Length);
-			}
-		}
+		public byte[] Request => Encoding.ASCII.GetBytes(_message);
+		public byte[] RequestLength => BitConverter.GetBytes(Request.Length);
 	}
 }
