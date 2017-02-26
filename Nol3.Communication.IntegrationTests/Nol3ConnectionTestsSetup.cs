@@ -7,13 +7,13 @@ namespace Nol3.Communication.IntegrationTests
 	[TestFixture]
 	public partial class Nol3ConnectionTests
 	{
-		public Nol3Connector Nol3Connector => Nol3Connector.CreateClient(Nol3RegistryReader.Settings);
+		public Nol3Connector Nol3 => Nol3Connector.CreateClient(Nol3RegistryReader.Settings);
 
 		[SetUp]
 		public void SetUp()
 		{
 			Disposable.Using<IdGenerator, object>(
-				() => IdGenerator.GetIDGenerator(),
+				() => IdGenerator.GetIDGenerator,
 				(_idGenerator) =>
 					{
 						Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration

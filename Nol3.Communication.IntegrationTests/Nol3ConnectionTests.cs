@@ -23,7 +23,7 @@ namespace Nol3.Communication.IntegrationTests
 			//prepare config
 			Disposable
 				.Using<IdGenerator,object>(
-				()=> IdGenerator.GetIDGenerator(),
+				()=> IdGenerator.GetIDGenerator,
 				(IDGen) => 
 					{
 						Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
@@ -60,7 +60,7 @@ namespace Nol3.Communication.IntegrationTests
 		{
 			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GetIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator)
 			{
 				currentID = IDGen.CurrentID;
 
@@ -101,7 +101,7 @@ namespace Nol3.Communication.IntegrationTests
 		{
 			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GetIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator)
 			{
 				currentID = IDGen.CurrentID;
 
@@ -150,7 +150,7 @@ namespace Nol3.Communication.IntegrationTests
 		{
 			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GetIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator)
 			{
 				currentID = IDGen.CurrentID;
 
@@ -199,7 +199,7 @@ namespace Nol3.Communication.IntegrationTests
 		{
 			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GetIDGenerator())
+			using (var IDGen = IdGenerator.GetIDGenerator)
 			{
 				currentID = IDGen.CurrentID;
 
