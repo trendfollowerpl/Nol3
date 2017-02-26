@@ -18,24 +18,25 @@ namespace Nol3.Communication.FIXML
 		public static string GenerateRequestMessage<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
 		{
 			ROOTFIXML<T> request = new ROOTFIXML<T>(requestObject);
-			StringWriter stringWriter = new StringWriter();
-			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
+
 			XmlSerializer ser = overrides != null
 				? new XmlSerializer(typeof(ROOTFIXML<T>), overrides)
 				: new XmlSerializer(typeof(ROOTFIXML<T>));
-			XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
-			string result = string.Empty;
 
+			XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
 			xmlns.Add("", "");
 
-			using (stringWriter)
-			using (xmlWriter)
-			{
-				ser.Serialize(xmlWriter, request, xmlns);
-				result = stringWriter.ToString();
-			}
+			using (var stringWriter = new StringWriter())
+				return
+					Disposable.Using(
+						() => XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true }),
+						(writer) =>
+							{
+								ser.Serialize(writer, request, xmlns);
+								return stringWriter.ToString();
+							}
+					);
 
-			return result;
 		}
 
 		public static string GenerateUserRequestMessage(UserRequest userRequest)
@@ -46,11 +47,11 @@ namespace Nol3.Communication.FIXML
 		public static string GenerateUserLoginRequest()
 		{
 
-			string id;
-			using (var IDGEN = IdGenerator.GetIDGenerator())
-			{
-				id = IDGEN.ID;
-			}
+			string id =
+					Disposable.
+						Using(
+							() => IdGenerator.GetIDGenerator(),
+							(IDGEN) => IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest
 			{
@@ -65,11 +66,11 @@ namespace Nol3.Communication.FIXML
 		public static string GenerateUserLogoutRequest()
 		{
 
-			string id;
-			using (var IDGEN = IdGenerator.GetIDGenerator())
-			{
-				id = IDGEN.ID;
-			}
+			string id =
+				Disposable.
+					Using(
+						()=>IdGenerator.GetIDGenerator(),
+						(IDGEN)=>IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest
 			{
@@ -84,11 +85,11 @@ namespace Nol3.Communication.FIXML
 		public static string GenerateUserStatusRequest()
 		{
 
-			string id;
-			using (var IDGEN = IdGenerator.GetIDGenerator())
-			{
-				id = IDGEN.ID;
-			}
+			string id =
+				Disposable.
+					Using(
+						() => IdGenerator.GetIDGenerator(),
+						(IDGEN) => IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest
 			{
@@ -99,7 +100,7 @@ namespace Nol3.Communication.FIXML
 			});
 		}
 
-		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, XmlAttributeOverrides overrides = null) where T : class,new()
+		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, XmlAttributeOverrides overrides = null) where T : class, new()
 		{
 			if (string.IsNullOrEmpty(responseMessage)) return null;
 			XmlSerializer ser = new XmlSerializer(typeof(ROOTFIXML<T>), overrides);

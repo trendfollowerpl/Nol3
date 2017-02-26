@@ -13,34 +13,35 @@ namespace Nol3.Communication.Tools
 	public static class Nol3ConfigurationManager
 	{
 		private const string Nol3CommunicationConfigFileName = "Nol3.Communication.config";
+		public static string ConfigurationPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Nol3CommunicationConfigFileName);
 
-		public static string ConfigurationPath
-		{
-			get
-			{
-				return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Nol3CommunicationConfigFileName);
-			}
-		}
 		public static Nol3Configuration GetConfiguration()
 		{
-			Nol3Configuration config;
+			return Disposable
+				.Using<Stream, Nol3Configuration>(
+					() => File.OpenRead(ConfigurationPath),
+					(file) =>
+						{
+							return new XmlSerializer(typeof(Nol3Configuration))
+								.Deserialize(file) as Nol3Configuration;
+						} 
+				);
 
-			XmlSerializer xs = new XmlSerializer(typeof(Nol3Configuration));
 			
-			using (Stream file = File.OpenRead(ConfigurationPath))
-			{
-				config = xs.Deserialize(file) as Nol3Configuration;
-			}
-			
-			return config;
 		}
 		public static void SaveConfiguration(Nol3Configuration currentConfiguration)
 		{
-			XmlSerializer xs = new XmlSerializer(typeof(Nol3Configuration));
-			using (Stream file = File.Create(ConfigurationPath))
-			{
-				xs.Serialize(file, currentConfiguration);
-			}
+			Disposable
+				.Using<Stream, object>(
+					() => File.Create(ConfigurationPath),
+					(file) =>
+					{
+						new XmlSerializer(typeof(Nol3Configuration))
+							.Serialize(file, currentConfiguration);
+
+						return null;
+					}
+				);
 		}
 	}
 }

@@ -9,7 +9,7 @@ using Nol3.Communication;
 using Nol3.Communication.FIXML;
 using Nol3.Communication.Tools;
 using Nol3.Communication.Models.NolAPI;
-
+using System.Net.Sockets;
 
 namespace Nol3.Communication.IntegrationTests
 {
@@ -20,36 +20,35 @@ namespace Nol3.Communication.IntegrationTests
 		[Repeat(2)]
 		public void CheckIfUserCanLoginToNol()
 		{
-			string currentID;
 			//prepare config
-			using (var IDGen = IdGenerator.GetIDGenerator())
-			{
-				currentID = IDGen.CurrentID;
-
-				Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
-				{
-					ID = Convert.ToInt32(IDGen.ID),
-					Login = "BOS",
-					Password = "BOS"
-				});
-			}
-			string response;
-			using (var client =
-				Nol3.SendRequestSynch(
-					new Nol3Request(
-						FIXMLManager.GenerateUserLoginRequest()
-				)))
-			{
-				response = Nol3.ReciveResponse(client);
-			}
+			Disposable
+				.Using<IdGenerator,object>(
+				()=> IdGenerator.GetIDGenerator(),
+				(IDGen) => 
+					{
+						Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
+						{
+							ID = Convert.ToInt32(IDGen.ID),
+							Login = "BOS",
+							Password = "BOS"
+						});
+						return null;
+					}
+				);
+			
+			string response = 
+				Disposable.Using(
+						()=> Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
+						(client) => Nol3.ReciveResponse(client)
+					);
 
 			//cleanup - logout
-			using (Nol3.SendRequestSynch(new Nol3Request(
-					FIXMLManager.GenerateUserLogoutRequest()
-					)))
-			{
-			}
-
+			Disposable.
+				Using<Socket, object>(
+					()=> Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())),
+					(client)=>null
+				);
+			
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());

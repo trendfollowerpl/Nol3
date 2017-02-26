@@ -98,12 +98,14 @@ namespace Nol3.Communication.Unit.Tests
 			FIXMLManager.GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>)));
 
 			string expected = @"<FIXML v=""5.0"" r=""20080317"" s=""20080314""><BizMsgRej RefMsgTyp=""BE"" BizRejRsn=""4"" Txt=""TEST Message"" /></FIXML>";
-			var sb = new StringBuilder();
 
-			sb.AppendLine(String.Format("RESULT     : {0}", result));
-			sb.AppendLine(String.Format("EXPECTED: {0}", expected));
+			TestContext.WriteLine(
+				new StringBuilder()
+				.AppendLine(String.Format("RESULT     : {0}", result))
+				.AppendLine(String.Format("EXPECTED: {0}", expected))
+				.ToString()
+				);
 
-			TestContext.WriteLine(sb.ToString());
 			Assert.That(result, Is.EqualTo(expected));
 		}
 
