@@ -15,10 +15,10 @@ namespace Nol3.Communication.FIXML
 {
 	public static class FIXMLManager
 	{
-		public static string GenerateRequestMessage<T>(T requestObject, XmlAttributeOverrides overrides = null) where T : new()
+		public static string GenerateRequestMessage<T>(Func<T> requestObject, Func<XmlAttributeOverrides> overrides = null) where T : new()
 		{
 			XmlSerializer ser = overrides != null
-				? new XmlSerializer(typeof(ROOTFIXML<T>), overrides)
+				? new XmlSerializer(typeof(ROOTFIXML<T>), overrides())
 				: new XmlSerializer(typeof(ROOTFIXML<T>));
 
 			XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
@@ -30,14 +30,14 @@ namespace Nol3.Communication.FIXML
 						() => XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true }),
 						(writer) =>
 							{
-								ser.Serialize(writer, new ROOTFIXML<T>(requestObject), xmlns);
+								ser.Serialize(writer, new ROOTFIXML<T>(requestObject()), xmlns);
 								return stringWriter.ToString();
 							}
 					);
 
 		}
 
-		public static string GenerateUserRequestMessage(UserRequest userRequest)
+		public static string GenerateUserRequestMessage(Func<UserRequest> userRequest)
 		{
 			return GenerateRequestMessage<UserRequest>(userRequest);
 		}
@@ -51,14 +51,15 @@ namespace Nol3.Communication.FIXML
 							() => IdGenerator.GetIDGenerator,
 							(IDGEN) => IDGEN.ID);
 
-			return GenerateUserRequestMessage(new UserRequest
-			{
-				Password = UserCredentials.Password,
-				Username = UserCredentials.Login,
-				UserRequestID = id,
-				UserRequestType = UserRequestType.Login
-			});
-
+			return GenerateUserRequestMessage(
+				()=>new UserRequest
+					{
+						Password = UserCredentials.Password,
+						Username = UserCredentials.Login,
+						UserRequestID = id,
+						UserRequestType = UserRequestType.Login
+					}
+				);
 		}
 
 		public static string GenerateUserLogoutRequest()
@@ -70,14 +71,14 @@ namespace Nol3.Communication.FIXML
 						()=>IdGenerator.GetIDGenerator,
 						(IDGEN)=>IDGEN.ID);
 
-			return GenerateUserRequestMessage(new UserRequest
-			{
-				Password = UserCredentials.Password,
-				Username = UserCredentials.Login,
-				UserRequestID = id,
-				UserRequestType = UserRequestType.Logout
-			});
-
+			return GenerateUserRequestMessage(
+				()=>new UserRequest
+					{
+						Password = UserCredentials.Password,
+						Username = UserCredentials.Login,
+						UserRequestID = id,
+						UserRequestType = UserRequestType.Logout
+					});
 		}
 
 		public static string GenerateUserStatusRequest()
@@ -89,13 +90,14 @@ namespace Nol3.Communication.FIXML
 						() => IdGenerator.GetIDGenerator,
 						(IDGEN) => IDGEN.ID);
 
-			return GenerateUserRequestMessage(new UserRequest
-			{
-				Password = UserCredentials.Password,
-				Username = UserCredentials.Login,
-				UserRequestID = id,
-				UserRequestType = UserRequestType.Status
-			});
+			return GenerateUserRequestMessage(
+				()=>new UserRequest
+					{
+						Password = UserCredentials.Password,
+						Username = UserCredentials.Login,
+						UserRequestID = id,
+						UserRequestType = UserRequestType.Status
+					});
 		}
 
 		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, Func<XmlAttributeOverrides> overrides = null) where T : class, new()

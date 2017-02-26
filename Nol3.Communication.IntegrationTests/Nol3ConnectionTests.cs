@@ -22,9 +22,9 @@ namespace Nol3.Communication.IntegrationTests
 		{
 			//prepare config
 			Disposable
-				.Using<IdGenerator,object>(
-				()=> IdGenerator.GetIDGenerator,
-				(IDGen) => 
+				.Using<IdGenerator, object>(
+				() => IdGenerator.GetIDGenerator,
+				(IDGen) =>
 					{
 						Nol3ConfigurationManager.SaveConfiguration(new Tools.Model.Nol3Configuration
 						{
@@ -35,20 +35,20 @@ namespace Nol3.Communication.IntegrationTests
 						return null;
 					}
 				);
-			
-			string response = 
+
+			string response =
 				Disposable.Using(
-						()=> Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
+						() => Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
 						(client) => Nol3.ReciveResponse(client)
 					);
 
 			//cleanup - logout
 			Disposable.
 				Using<Socket, object>(
-					()=> Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())),
-					(client)=>null
+					() => Nol3.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())),
+					(client) => null
 				);
-			
+
 			var userResponseObject = FIXMLManager.ParseUserResponseMessege(response);
 
 			Assert.That(userResponseObject, Is.TypeOf<UserResponse>());
@@ -215,7 +215,7 @@ namespace Nol3.Communication.IntegrationTests
 				Nol3.SendRequestSynch(
 					new Nol3Request(
 						FIXMLManager.GenerateRequestMessage<UserRequest>(
-							new UserRequest { UserRequestType = 666 }
+							() => new UserRequest { UserRequestType = 666 }
 				))))
 			{
 				response = Nol3.ReciveResponse(client);
