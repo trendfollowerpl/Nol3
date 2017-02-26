@@ -100,26 +100,27 @@ namespace Nol3.Communication.FIXML
 					});
 		}
 
-		public static ROOTFIXML<T> ParseResponseMessage<T>(string responseMessage, Func<XmlAttributeOverrides> overrides = null) where T : class, new()
+		public static ROOTFIXML<T> ParseResponseMessage<T>(Func<string> responseMessage, Func<XmlAttributeOverrides> overrides = null) where T : class, new()
 		{
-			if (string.IsNullOrEmpty(responseMessage)) return null;
+			var response = responseMessage();
+			if (string.IsNullOrEmpty(response)) return null;
 			
 			return 
 				Disposable.Using(
-					()=> new StringReader(responseMessage),
+					()=> new StringReader(response),
 					(xmlread)=> new XmlSerializer(typeof(ROOTFIXML<T>), overrides())
 									.Deserialize(xmlread) as ROOTFIXML<T>
 					);
 		}
 
-		public static UserResponse ParseUserResponseMessege(string responseMessage)
+		public static UserResponse ParseUserResponseMessege(Func<string> responseMessage)
 		{
 			return ParseResponseMessage<UserResponse>(responseMessage,
 				()=>GenerateXMLAttributeOverride("UserRsp", typeof(ROOTFIXML<UserResponse>))
 				).UserReq;
 		}
 
-		public static BusinessMessageReject ParseBusinessMessageRejectMessage(string responseMessage)
+		public static BusinessMessageReject ParseBusinessMessageRejectMessage(Func<string> responseMessage)
 		{
 			return ParseResponseMessage<BusinessMessageReject>(responseMessage,
 				()=>GenerateXMLAttributeOverride("BizMsgRej", typeof(ROOTFIXML<BusinessMessageReject>))).UserReq;

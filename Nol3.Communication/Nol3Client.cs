@@ -13,7 +13,7 @@ using Nol3.Communication.Models.NolAPI;
 
 namespace Nol3.Communication
 {
-	public class Nol3Client:IDisposable
+	public class Nol3Client : IDisposable
 	{
 		private Nol3Connector _nol3Connector;
 		private static Nol3Client _nol3ClientInstance = null;
@@ -23,7 +23,7 @@ namespace Nol3.Communication
 		private Nol3Client(NOL3RegistrySetting settings)
 		{
 			_nol3Connector = Nol3Connector.CreateClient(settings);
-			_asyncPortListenerTokenSource=new CancellationTokenSource();
+			_asyncPortListenerTokenSource = new CancellationTokenSource();
 			_asyncPortListenerToken = _asyncPortListenerTokenSource.Token;
 		}
 		public static Nol3Client GetNol3Client(NOL3RegistrySetting settings)
@@ -42,23 +42,18 @@ namespace Nol3.Communication
 		#endregion
 		public void LoginNol3()
 		{
-			string responseMessage;
-			Disposable.Using<Socket,object>(
-				() => _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
-				(disp) =>
-				{
-					responseMessage = _nol3Connector.ReciveResponse(disp);
-					MessageParserToEventsAsync(responseMessage).Wait();
-					return null;
-				}
+			string responseMessage =
+				Disposable.Using(
+					() => _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())),
+					(disp) =>
+					{
+						responseMessage = _nol3Connector.ReciveResponse(disp);
+						MessageParserToEventsAsync(() => responseMessage).Wait();
+						return responseMessage;
+					}
 				);
 
-			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLoginRequest())))
-			{
-				responseMessage = _nol3Connector.ReciveResponse(socket);
-				MessageParserToEventsAsync(responseMessage).Wait();
-			}
-			if (FIXMLManager.ParseUserResponseMessege(responseMessage)
+			if (FIXMLManager.ParseUserResponseMessege(() => responseMessage)
 				.UserStatus == UserStatus.LoggedIn)
 			{
 				//TODO : probably memeory leek from Socket
@@ -68,16 +63,19 @@ namespace Nol3.Communication
 		}
 		public void LogoutNol3()
 		{
-			using (var socket = _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())))
-			{
-				var responseMessage = _nol3Connector.ReciveResponse(socket);
-				MessageParserToEventsAsync(responseMessage).Wait();
-			}
+			Disposable.Using<Socket, object>(
+				() => _nol3Connector.SendRequestSynch(new Nol3Request(FIXMLManager.GenerateUserLogoutRequest())),
+				(socket) => {
+					MessageParserToEventsAsync(() => _nol3Connector.ReciveResponse(socket)).Wait();
+					return null;
+					}
+				);
+
 			_asyncPortListenerTokenSource.Cancel();
 		}
 
 
-		private Task MessageParserToEventsAsync(string message)
+		private Task MessageParserToEventsAsync(Func<string> message)
 		{
 			Task<bool> t1 = new TaskFactory<bool>().StartNew(() =>
 			{
@@ -103,19 +101,18 @@ namespace Nol3.Communication
 
 			return Task.WhenAll<bool>(new Task<bool>[] { t1, t2 }).ContinueWith(resultList =>
 			  {
-				  if (resultList.Result.All(x => x == false)) UnknownMessageTypeEvent?.Invoke(message);
+				  if (resultList.Result.All(x => x == false)) UnknownMessageTypeEvent?.Invoke(message());
 			  });
 		}
 
 		private Task AsyncPortListener(Socket asyncClient, CancellationToken token)
 		{
-			Task taks= new TaskFactory(token, TaskCreationOptions.LongRunning, TaskContinuationOptions.None, TaskScheduler.Default)
+			Task taks = new TaskFactory(token, TaskCreationOptions.LongRunning, TaskContinuationOptions.None, TaskScheduler.Default)
 					.StartNew(() =>
 					{
 						while (!token.IsCancellationRequested)
 						{
-							string response = _nol3Connector.ReciveResponse(asyncClient);
-							MessageParserToEventsAsync(response);
+							MessageParserToEventsAsync(() => _nol3Connector.ReciveResponse(asyncClient));
 						}
 						Console.WriteLine("Cancelled");
 					});
