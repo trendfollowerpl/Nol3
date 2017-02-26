@@ -50,7 +50,7 @@ namespace Nol3.Communication.FIXML
 			string id =
 					Disposable.
 						Using(
-							() => IdGenerator.GetIDGenerator(),
+							() => IdGenerator.GetIDGenerator,
 							(IDGEN) => IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest
@@ -69,7 +69,7 @@ namespace Nol3.Communication.FIXML
 			string id =
 				Disposable.
 					Using(
-						()=>IdGenerator.GetIDGenerator(),
+						()=>IdGenerator.GetIDGenerator,
 						(IDGEN)=>IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest
@@ -88,7 +88,7 @@ namespace Nol3.Communication.FIXML
 			string id =
 				Disposable.
 					Using(
-						() => IdGenerator.GetIDGenerator(),
+						() => IdGenerator.GetIDGenerator,
 						(IDGEN) => IDGEN.ID);
 
 			return GenerateUserRequestMessage(new UserRequest

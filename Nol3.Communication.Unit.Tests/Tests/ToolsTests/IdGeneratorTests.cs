@@ -19,7 +19,7 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 			string ID =
 				Disposable
 					.Using<IdGenerator, string>(
-					() => IdGenerator.GetIDGenerator(),
+					() => IdGenerator.GetIDGenerator,
 					(disp) =>
 						{
 							string id = string.Empty;
@@ -42,7 +42,7 @@ namespace Nol3.Communication.Unit.Tests.Tests.ToolsTests
 			IList<string> ids =
 				Disposable
 				.Using<IdGenerator, IList<string>>(
-					() => IdGenerator.GetIDGenerator(),
+					() => IdGenerator.GetIDGenerator,
 					(idGen) =>
 					{
 						var tmp = new List<string>();
